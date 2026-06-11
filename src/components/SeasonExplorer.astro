@@ -13,23 +13,26 @@ const DEFAULT = 1; // Sommer
       <p class="text-lg text-muted mt-4 text-pretty">Klicken Sie sich durchs Jahr - und sehen Sie, worum wir uns wann für Sie kümmern.</p>
     </div>
 
-    <!-- Tabs -->
-    <div class="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 fade-in" role="tablist" aria-label="Jahreszeit wählen">
-      {seasons.map((s, i) => (
-        <button
-          class={`season-tab ${i === DEFAULT ? 'is-active' : ''}`}
-          data-season={s.id}
-          role="tab"
-          aria-selected={i === DEFAULT ? 'true' : 'false'}
-          aria-controls={`panel-${s.id}`}
-        >
-          <Icon name={s.icon} size={17} strokeWidth={2} />
-          <span class="flex flex-col items-start leading-none">
-            <span class="font-bold">{s.label}</span>
-            <span class="text-[0.62rem] font-mono opacity-70 mt-0.5">{s.months}</span>
-          </span>
-        </button>
-      ))}
+    <!-- Glas-Segment-Control -->
+    <div class="overflow-x-auto pb-2 -mx-1 px-1 fade-in">
+      <div class="seg" data-seg role="tablist" aria-label="Jahreszeit wählen">
+        <span class="seg-thumb" aria-hidden="true"></span>
+        {seasons.map((s, i) => (
+          <button
+            class={`seg-btn season-tab ${i === DEFAULT ? 'is-active' : ''}`}
+            data-season={s.id}
+            role="tab"
+            aria-selected={i === DEFAULT ? 'true' : 'false'}
+            aria-controls={`panel-${s.id}`}
+          >
+            <Icon name={s.icon} size={17} strokeWidth={2} />
+            <span class="flex flex-col items-start leading-none">
+              <span class="font-bold">{s.label}</span>
+              <span class="text-[0.62rem] font-mono opacity-70 mt-0.5">{s.months}</span>
+            </span>
+          </button>
+        ))}
+      </div>
     </div>
 
     <!-- Panels -->
@@ -75,19 +78,6 @@ const DEFAULT = 1; // Sommer
 </section>
 
 <style>
-  .season-tab {
-    display: inline-flex; align-items: center; gap: 0.6rem; flex-shrink: 0;
-    padding: 0.6rem 1.1rem; border-radius: 16px;
-    background: #fff; border: 1px solid rgb(var(--rgb-border));
-    font-family: var(--font-display); font-size: 0.9rem; color: rgb(var(--rgb-ink) / 0.7);
-    transition: all 0.25s ease; cursor: pointer; -webkit-tap-highlight-color: transparent;
-  }
-  .season-tab:hover { border-color: rgb(var(--rgb-aqua) / 0.5); color: rgb(var(--rgb-ink)); transform: translateY(-2px); }
-  .season-tab.is-active {
-    background: rgb(var(--rgb-marine)); color: #fff; border-color: rgb(var(--rgb-marine));
-    box-shadow: 0 10px 24px -10px rgb(9 42 49 / 0.5);
-  }
-  .season-tab.is-active .text-aqua-deep { color: #fff; }
   .season-panel[hidden] { display: none; }
   .season-panel:not([hidden]) { animation: panel-in 0.5s cubic-bezier(0.16,1,0.3,1); }
 </style>

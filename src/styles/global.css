@@ -529,3 +529,129 @@
 @keyframes marquee-x { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 @keyframes panel-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes float-soft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* ════════════════════════════════════════════════════════════════
+   LIQUID GLASS — iOS-26-Stil: Spekular-Rand, innerer Lichtschein,
+   geschichtete Transluzenz, gleitende Glas-Segmente. (Unlayered →
+   überschreibt ältere @layer-Regeln gezielt.)
+   ════════════════════════════════════════════════════════════════ */
+:root {
+  --glass-rim: linear-gradient(135deg, rgb(255 255 255 / 0.9), rgb(255 255 255 / 0.15) 26%, rgb(255 255 255 / 0.02) 48%, rgb(255 255 255 / 0.08) 68%, rgb(255 255 255 / 0.55));
+  --glass-blur: blur(14px) saturate(170%);
+  --glass-blur-strong: blur(20px) saturate(180%);
+}
+
+/* Basis-Glas (über Foto / Dark) */
+.lg {
+  position: relative; isolation: isolate;
+  background: rgb(255 255 255 / 0.10);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 0.40),
+    inset 0 -8px 22px -14px rgb(255 255 255 / 0.22),
+    0 10px 30px -10px rgb(5 24 28 / 0.40);
+}
+.lg::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.25px; z-index: 3;
+  background: var(--glass-rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.lg::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: 0; pointer-events: none;
+  background: radial-gradient(130% 90% at 0% 0%, rgb(255 255 255 / 0.20), transparent 52%);
+}
+.lg > * { position: relative; z-index: 1; }
+
+/* Helle, gefrostete Glasplatte (für Light-Sections über Mesh/Foto) */
+.lg-light { background: rgb(255 255 255 / 0.55); box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.85), inset 0 -10px 24px -16px rgb(255 255 255 / 0.4), 0 12px 34px -12px rgb(5 24 28 / 0.22); }
+.lg-light::before { background: radial-gradient(130% 90% at 0% 0%, rgb(255 255 255 / 0.5), transparent 55%); }
+
+.lg-dark { background: rgb(9 42 49 / 0.42); box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.22), 0 18px 44px -16px rgb(0 0 0 / 0.6); }
+.lg-aqua { background: rgb(13 165 188 / 0.18); }
+.lg-strong { -webkit-backdrop-filter: var(--glass-blur-strong); backdrop-filter: var(--glass-blur-strong); }
+
+/* sanfter Hover-Lift für interaktive Glaskörper */
+.lg-hover { transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s ease, background 0.3s ease; }
+.lg-hover:hover { transform: translateY(-3px); background: rgb(255 255 255 / 0.16); box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.5), 0 18px 44px -12px rgb(5 24 28 / 0.5); }
+.lg-light.lg-hover:hover { background: rgb(255 255 255 / 0.68); }
+
+/* ── Glas-Nav (Header-Pille) ── */
+.lg-nav {
+  background: rgb(255 255 255 / 0.55) !important;
+  -webkit-backdrop-filter: var(--glass-blur-strong); backdrop-filter: var(--glass-blur-strong);
+  border: none !important;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.9), inset 0 -10px 24px -16px rgb(255 255 255 / 0.5), 0 8px 30px -10px rgb(5 24 28 / 0.18) !important;
+}
+.lg-nav::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.25px; background: var(--glass-rim); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+
+/* ── Glas-Buttons ── */
+.btn-glass {
+  background: rgb(255 255 255 / 0.14) !important; color: #fff; border: none;
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.5), inset 0 -6px 16px -10px rgb(255 255 255 / 0.3), 0 6px 18px -6px rgb(5 24 28 / 0.35);
+}
+.btn-glass::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: var(--glass-rim); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.btn-glass:hover { background: rgb(255 255 255 / 0.24) !important; }
+.btn-glass-light {
+  background: rgb(255 255 255 / 0.6) !important; color: rgb(var(--rgb-ink));
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); border: none;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.95), 0 6px 18px -6px rgb(5 24 28 / 0.22);
+}
+.btn-glass-light::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: var(--glass-rim); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.btn-glass-light:hover { background: rgb(255 255 255 / 0.78) !important; color: rgb(var(--rgb-aqua-deep)); }
+
+/* ── Glas-Pille (Hero-Eyebrow etc.) ── */
+.pill-dark {
+  background: rgb(255 255 255 / 0.14) !important;
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  border: none !important;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.45), 0 4px 14px -6px rgb(5 24 28 / 0.3);
+}
+
+/* ════════ GLAS-SEGMENT-CONTROL (gleitender Glas-Thumb) ════════ */
+.seg {
+  position: relative; display: inline-flex; align-items: stretch; gap: 0;
+  padding: 5px; border-radius: var(--radius-pill);
+  background: rgb(9 42 49 / 0.06);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 2px rgb(5 24 28 / 0.10), inset 0 1px 1px rgb(255 255 255 / 0.6);
+}
+.seg-dark { background: rgb(255 255 255 / 0.07); box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.25), inset 0 1px 1px rgb(255 255 255 / 0.12); }
+.seg-thumb {
+  position: absolute; top: 5px; bottom: 5px; left: 0; width: 0; border-radius: var(--radius-pill); z-index: 0;
+  background: rgb(255 255 255 / 0.85);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.95), 0 4px 12px -3px rgb(5 24 28 / 0.28);
+  opacity: 0; transition: transform 0.46s cubic-bezier(0.5,0.05,0.2,1), width 0.46s cubic-bezier(0.5,0.05,0.2,1), opacity 0.3s ease;
+}
+.seg-dark .seg-thumb { background: rgb(255 255 255 / 0.16); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.4), 0 4px 14px -3px rgb(0 0 0 / 0.4); }
+.seg-dark .seg-thumb::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: var(--glass-rim); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.seg-btn {
+  position: relative; z-index: 1; flex-shrink: 0; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap;
+  padding: 0.6rem 1.15rem; border-radius: var(--radius-pill); border: none; background: transparent;
+  font-family: var(--font-display); font-weight: 600; font-size: 0.9rem;
+  color: rgb(var(--rgb-ink) / 0.62); transition: color 0.3s ease;
+}
+.seg-dark .seg-btn { color: rgb(255 255 255 / 0.6); }
+.seg-btn:hover { color: rgb(var(--rgb-ink)); }
+.seg-dark .seg-btn:hover { color: #fff; }
+.seg-btn.is-active { color: rgb(var(--rgb-aqua-deep)); }
+.seg-dark .seg-btn.is-active { color: #fff; }
+@media (prefers-reduced-motion: reduce) { .seg-thumb { transition: none; } }
+
+/* ── Light-Section-Karte mit Spekular-Politur (kein Blur nötig) ── */
+.lg-panel { position: relative; isolation: isolate; box-shadow: inset 0 1px 1px rgb(255 255 255 / 0.9), 0 1px 2px rgb(5 24 28 / 0.05), 0 14px 34px -16px rgb(5 24 28 / 0.16); }
+.lg-panel::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(150deg, rgb(255 255 255 / 0.9), rgb(13 165 188 / 0.12) 35%, transparent 60%, rgb(13 165 188 / 0.08)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; z-index: 4; }
+
+/* ── Mesh-Hintergrund: gibt Glas auf Light-Sections etwas zum Brechen ── */
+.mesh { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+/* weiche Verläufe ohne teures filter:blur → günstig fürs Rendering */
+.mesh::before, .mesh::after { content: ""; position: absolute; border-radius: 50%; opacity: 0.9; }
+.mesh::before { width: 72%; height: 95%; top: -22%; left: -16%; background: radial-gradient(circle, rgb(64 207 224 / 0.13), transparent 64%); }
+.mesh::after { width: 66%; height: 88%; bottom: -24%; right: -13%; background: radial-gradient(circle, rgb(13 165 188 / 0.10), transparent 64%); }
+
+/* Glas-Politur auf allen weißen Karten (oberer Innen-Glanz) */
+.card, .card-feature, .tile { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 1px 2px rgb(5 24 28 / 0.04); }
+.card:hover, .card-feature:hover, .tile:hover { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), var(--shadow-lift); }

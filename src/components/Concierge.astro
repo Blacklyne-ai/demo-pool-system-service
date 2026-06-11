@@ -29,9 +29,8 @@ import { telMobile, site } from '../data/site';
       <!-- Antworten -->
       <div class="lg:col-span-3 fade-in stagger-1">
         {concierge.map((c, i) => (
-          <div id={`answer-${i}`} class="concierge-a card-glass card-glass-dark rounded-2xl p-7 md:p-9 relative overflow-hidden" data-q={i} role="tabpanel" hidden={i !== 0}>
-            <div class="caustics caustics-soft" aria-hidden="true"></div>
-            <div class="relative">
+          <div id={`answer-${i}`} class="concierge-a lg lg-dark lg-strong rounded-[24px] p-7 md:p-9 overflow-hidden" data-q={i} role="tabpanel" hidden={i !== 0}>
+            <div>
               <span class="tile-icon mb-5 !bg-white/10 !border-white/15 !text-aqua-bright"><Icon name={c.icon} size={26} strokeWidth={1.9} /></span>
               <h3 class="text-white font-display font-extrabold text-2xl mb-3">{c.answerTitle}</h3>
               <p class="text-white/75 leading-relaxed text-pretty mb-7">{c.answer}</p>

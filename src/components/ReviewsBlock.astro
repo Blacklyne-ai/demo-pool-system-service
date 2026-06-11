@@ -12,13 +12,14 @@ const credentials = [
 ];
 ---
 <section class="section-foam py-20 md:py-28 relative overflow-hidden">
+  <div class="mesh" aria-hidden="true"></div>
   <div class="container-px relative">
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
       <!-- Echte Google-Bewertung -->
       <div class="lg:col-span-5 fade-in">
         <span class="eyebrow mb-5">Stimmen & Vertrauen</span>
         <h2 class="heading-lg text-balance mb-6">Bewertet auf <span class="accent-serif accent-water">Google.</span></h2>
-        <div class="card !p-7 flex items-center gap-6">
+        <div class="card lg-panel !p-7 flex items-center gap-6">
           <div class="text-center flex-shrink-0">
             <div class="big-number text-aqua-deep !text-5xl leading-none">{site.googleRating}</div>
             <div class="stars justify-center mt-2" role="img" aria-label={`${site.googleRating} von 5 Sternen`}>

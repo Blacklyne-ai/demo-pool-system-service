@@ -124,6 +124,23 @@ const ogImageUrl = new URL(ogImage, site.url).toString();
         );
         document.querySelectorAll('.fade-in, .timeline').forEach((el) => io.observe(el));
 
+        // ── Glas-Segment-Control: gleitenden Thumb unter .is-active legen ──
+        document.querySelectorAll<HTMLElement>('[data-seg]').forEach((seg) => {
+          const thumb = seg.querySelector<HTMLElement>('.seg-thumb');
+          if (!thumb) return;
+          const place = () => {
+            const active = seg.querySelector<HTMLElement>('.seg-btn.is-active');
+            if (!active) { thumb.style.opacity = '0'; return; }
+            thumb.style.width = active.offsetWidth + 'px';
+            thumb.style.transform = `translateX(${active.offsetLeft - 5}px)`;
+            thumb.style.opacity = '1';
+          };
+          seg.querySelectorAll<HTMLElement>('.seg-btn').forEach((b) =>
+            b.addEventListener('click', () => requestAnimationFrame(place)));
+          requestAnimationFrame(place);
+          if ('ResizeObserver' in window) new ResizeObserver(() => place()).observe(seg);
+        });
+
         // ── Zähler ──
         const fmt = (n: number) => n.toLocaleString('de-DE');
         const animateCount = (el: HTMLElement) => {

@@ -1,17 +1,19 @@
 ---
-// Mobile Floating-Bar — bewusst schlank (keine fetten Controls).
+// Mobile Floating-Dock - Liquid-Glass-Leiste mit schlanken Aktions-Pillen.
 import { telMobile, whatsappLink, site } from '../data/site';
 import Icon from './Icon.astro';
 ---
-<div class="floating-mobile fixed bottom-3 left-0 right-0 z-40 px-3 gap-2 pointer-events-none">
-  <a href={telMobile} class="btn btn-marine pointer-events-auto flex-1" aria-label={`Anrufen ${site.phoneMobile}`}>
-    <Icon name="Phone" size={15} strokeWidth={2.3} />
-    <span class="text-[0.8rem] mono">Anrufen</span>
-  </a>
-  <a href="/kontakt" class="btn btn-light pointer-events-auto flex-1" aria-label="Beratung anfragen">
-    Beratung
-  </a>
-  <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp pointer-events-auto !px-3.5" aria-label="WhatsApp schreiben">
-    <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
-  </a>
+<div class="floating-mobile fixed bottom-3 left-0 right-0 z-40 px-3 justify-center pointer-events-none">
+  <div class="lg lg-light rounded-pill p-1.5 flex items-stretch gap-1.5 w-full max-w-md pointer-events-auto">
+    <a href={telMobile} class="btn btn-marine btn-sm flex-1" aria-label={`Anrufen ${site.phoneMobile}`}>
+      <Icon name="Phone" size={14} strokeWidth={2.4} />
+      <span class="text-[0.8rem]">Anrufen</span>
+    </a>
+    <a href="/kontakt" class="btn btn-aqua btn-sm flex-1" aria-label="Beratung anfragen">
+      Beratung
+    </a>
+    <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm !px-3" aria-label="WhatsApp schreiben">
+      <Icon name="MessageCircle" size={17} strokeWidth={2.2} />
+    </a>
+  </div>
 </div>
