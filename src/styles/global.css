@@ -505,11 +505,11 @@
 .floating-mobile { display: none; }
 @media (max-width: 1023px) { .floating-mobile { display: flex; } }
 
-/* ════════ SCROLLBAR ════════ */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: rgb(var(--rgb-foam)); }
-::-webkit-scrollbar-thumb { background: #B9D2D6; border-radius: 999px; }
-::-webkit-scrollbar-thumb:hover { background: rgb(var(--rgb-aqua)); }
+/* ════════ SCROLLBAR ════════
+   Bewusst KEIN globales ::-webkit-scrollbar-Styling: das erzwingt auf macOS
+   klassische, immer sichtbare Scrollbalken (reservieren Layout-Breite →
+   störender Streifen rechts über dem Hero). Ohne Styling nutzt macOS Overlay-
+   Scrollbalken (full-bleed). Andere OS zeigen den Standard-Scrollbalken. */
 
 /* ════════ KEYFRAMES — außerhalb @layer (Tailwind v3 purged sie sonst) ════════ */
 @keyframes dot-pulse {
