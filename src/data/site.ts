@@ -13,7 +13,7 @@ export const site = {
   leitsatz: 'Ihr kompetenter Partner rund um das Thema Schwimmbad.', // verbatim
   cta: 'Rufen Sie uns an, wir beraten Sie gerne vor Ort!', // verbatim (Typo „ab"→„an" korrigiert)
   description:
-    'Pool-System-Service in Inning am Ammersee — Ihr kompetenter Partner rund um das Thema Schwimmbad. Seit 1991: Sanierung, Grundreinigung, Solartechnik, Wartung und Wasseranalytik. Persönliche Beratung vor Ort am Ammersee und im Fünfseenland.',
+    'Pool-System-Service in Inning am Ammersee - Ihr kompetenter Partner rund um das Thema Schwimmbad. Seit 1991: Sanierung, Grundreinigung, Solartechnik, Wartung und Wasseranalytik. Persönliche Beratung vor Ort am Ammersee und im Fünfseenland.',
   url: 'https://demo-pool-system-service.pages.dev',
 
   // Telefon — Display verbatim alte Kontaktseite
