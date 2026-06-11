@@ -12,6 +12,13 @@ const channels = [
   { icon: 'MessageCircle', label: 'WhatsApp', value: 'Nachricht senden', href: whatsappLink, whatsapp: true, note: 'Schnell ein Foto vom Becken schicken' },
   { icon: 'Mail', label: 'E-Mail', value: site.email, href: mailFor('Anfrage rund ums Schwimmbad'), note: 'Antwort meist am selben Tag' },
 ];
+
+const faqs = [
+  { q: 'In welcher Region sind Sie für mich da?', a: 'Wir sind in Inning am Ammersee zuhause und für Sie im Fünfseenland, rund um den Ammersee und westlich von München unterwegs. Im Zweifel einfach anrufen - wir sagen Ihnen offen, ob wir zu Ihnen kommen.' },
+  { q: 'Wie bekomme ich einen Termin?', a: 'Termine nach Vereinbarung. Rufen Sie an oder schreiben Sie uns - wir finden gemeinsam einen Termin, der zu Ihnen passt.' },
+  { q: 'Übernehmen Sie auch die laufende Pflege?', a: 'Ja. Von der Grundreinigung über die Wartung bis zur automatischen Mess- und Regeltechnik halten wir Ihr Becken ganzjährig in Form.' },
+  { q: 'Kann ein altes Becken saniert werden?', a: 'Auf jeden Fall. Mit einer passgenauen neuen Folie und sauberen Schweißnähten wird Ihr Becken praktisch wie neu - ganz ohne kompletten Neubau.' },
+];
 ---
 
 <Layout
@@ -24,15 +31,20 @@ const channels = [
     crumb="Kontakt"
     title="Rufen Sie uns an - wir beraten Sie gerne <em>vor Ort.</em>"
     subtitle="Termine nach Vereinbarung. Am Telefon, per WhatsApp oder E-Mail - und am liebsten persönlich bei Ihnen am Becken."
+    image="/images/about-pool.jpg"
+    imageWebp="/images/about-pool.webp"
+    imageAlt="Gepflegtes Becken an einer Villa - persönliche Beratung vor Ort"
     ghost="HALLO"
     primary={{ href: telMobile, label: site.phoneMobile }}
+    secondary={{ href: whatsappLink, label: 'WhatsApp schreiben' }}
   />
 
   <!-- Kanäle + Karte -->
   <section class="section-paper py-16 md:py-24 relative overflow-hidden">
+    <div class="mesh" aria-hidden="true"></div>
     <div class="container-px relative">
       <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-        <!-- Kontakt-Tiles -->
+        <!-- Glas-Kontaktkarten -->
         <div>
           <div class="grid sm:grid-cols-2 gap-4">
             {channels.map((c) => (
@@ -40,18 +52,18 @@ const channels = [
                 href={c.href}
                 target={c.whatsapp ? '_blank' : undefined}
                 rel={c.whatsapp ? 'noopener' : undefined}
-                class="tile group"
+                class="lg lg-light lg-hover rounded-[22px] p-5 group flex flex-col"
               >
-                <span class={`tile-icon ${c.accent ? 'tile-icon-marine' : ''}`}><Icon name={c.icon} size={22} strokeWidth={2} /></span>
-                <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-light mt-1">{c.label}</div>
+                <span class={`tile-icon mb-3 ${c.accent ? 'tile-icon-marine' : ''}`}><Icon name={c.icon} size={22} strokeWidth={2} /></span>
+                <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-light">{c.label}</div>
                 <div class="font-display font-bold text-ink text-lg group-hover:text-aqua-deep transition-colors break-words">{c.value}</div>
-                <div class="text-[0.85rem] text-muted">{c.note}</div>
+                <div class="text-[0.85rem] text-muted mt-0.5">{c.note}</div>
               </a>
             ))}
           </div>
 
-          <!-- Adresse + Termine -->
-          <div class="card mt-4 !p-6">
+          <!-- Adresse + Status -->
+          <div class="lg lg-light rounded-[22px] mt-4 p-6">
             <div class="flex items-start gap-4">
               <span class="tile-icon flex-shrink-0"><Icon name="MapPin" size={22} strokeWidth={2} /></span>
               <div>
@@ -69,15 +81,57 @@ const channels = [
           </div>
         </div>
 
-        <!-- Karte -->
+        <!-- Karte + Anker -->
         <div class="lg:sticky lg:top-28">
-          <MapBlock class="h-[420px] lg:h-[560px]" />
-          <p class="signature mt-6 ml-1">{site.owner}</p>
-          <p class="text-[0.82rem] text-muted-light font-mono uppercase tracking-[0.14em] ml-1">Inhaberin · freut sich auf Ihren Anruf</p>
+          <MapBlock class="h-[420px] lg:h-[540px]" />
+          <div class="flex items-center gap-3 mt-6 ml-1">
+            <img src="/dino.png" alt="" width="86" height="40" class="h-9 w-auto flex-shrink-0" />
+            <div class="leading-tight">
+              <p class="signature">{site.owner}</p>
+              <p class="text-[0.82rem] text-muted-light font-mono uppercase tracking-[0.14em]">Inhaberin · freut sich auf Ihren Anruf</p>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section-foam py-16 md:py-24 relative overflow-hidden">
+    <div class="mesh" aria-hidden="true"></div>
+    <div class="container-narrow relative">
+      <div class="text-center mb-10 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">Gut zu wissen</span>
+        <h2 class="heading-lg text-balance">Häufige <span class="accent-serif accent-water">Fragen.</span></h2>
+      </div>
+      <div class="flex flex-col gap-3">
+        {faqs.map((f, i) => (
+          <details class={`faq lg lg-light rounded-[20px] fade-in stagger-${(i % 3) + 1}`}>
+            <summary>
+              <span class="font-display font-bold text-ink text-[1.05rem]">{f.q}</span>
+              <span class="faq-chev"><Icon name="ChevronDown" size={20} strokeWidth={2.4} /></span>
+            </summary>
+            <p class="faq-body text-muted leading-relaxed text-pretty">{f.a}</p>
+          </details>
+        ))}
       </div>
     </div>
   </section>
 
   <CtaBand title="Lieber gleich <em>anrufen?</em>" />
 </Layout>
+
+<style>
+  .faq { overflow: hidden; }
+  .faq > summary {
+    list-style: none; cursor: pointer; user-select: none;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1.25rem 1.5rem;
+  }
+  .faq > summary::-webkit-details-marker { display: none; }
+  .faq-chev { color: rgb(var(--rgb-aqua-deep)); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); flex-shrink: 0; }
+  .faq[open] .faq-chev { transform: rotate(180deg); }
+  .faq-body { padding: 0 1.5rem 1.4rem; margin: 0; max-width: 52ch; }
+  .faq[open] .faq-body { animation: panel-in 0.4s cubic-bezier(0.16,1,0.3,1); }
+  .faq > summary:hover .font-display { color: rgb(var(--rgb-aqua-deep)); }
+</style>

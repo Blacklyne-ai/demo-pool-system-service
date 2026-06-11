@@ -6,10 +6,17 @@ import CtaBand from '../components/CtaBand.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Icon from '../components/Icon.astro';
 import { services, weitereLeistungen, weitereProdukte } from '../data/services';
-import { telMobile } from '../data/site';
+import { telMobile, site } from '../data/site';
 
 const leistungen = services.filter((s) => s.kind === 'leistung');
 const produkte = services.filter((s) => s.kind === 'produkt');
+
+// Ablauf — belegt aus „persönliche Beratung vor Ort · planen, bauen, pflegen"
+const ablauf = [
+  { n: '01', icon: 'MessageCircle', title: 'Anrufen & Vor-Ort-Termin', text: 'Sie rufen an, wir kommen vorbei und schauen uns Ihr Becken persönlich an - ganz in Ruhe.' },
+  { n: '02', icon: 'Gauge', title: 'Beratung & Planung', text: 'Gemeinsam finden wir die passende Lösung. Ehrlich, auf den Punkt und auf dem neuesten Stand.' },
+  { n: '03', icon: 'WavesLadder', title: 'Umsetzung & Pflege', text: 'Wir setzen sauber um und halten Ihr Schwimmbad dauerhaft in Bestform - Saison für Saison.' },
+];
 ---
 
 <Layout
@@ -30,8 +37,32 @@ const produkte = services.filter((s) => s.kind === 'produkt');
     secondary={{ href: '#produkte', label: 'Zu den Produkten' }}
   />
 
+  <!-- Ablauf -->
+  <section class="section-marine aqua-horizon py-16 md:py-20 relative overflow-hidden">
+    <div class="caustics caustics-soft" aria-hidden="true"></div>
+    <div class="container-px relative">
+      <div class="max-w-2xl mb-10 fade-in">
+        <span class="eyebrow eyebrow-light mb-5">So einfach geht's</span>
+        <h2 class="heading-lg text-white text-balance">In drei Schritten ins klare <span class="accent-serif accent-glow">Wasser.</span></h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        {ablauf.map((a, i) => (
+          <div class={`lg lg-dark lg-hover rounded-[24px] p-7 fade-in stagger-${i + 1}`}>
+            <div class="flex items-center justify-between mb-5">
+              <span class="tile-icon !bg-white/10 !border-white/15 !text-aqua-bright"><Icon name={a.icon} size={24} strokeWidth={1.9} /></span>
+              <span class="big-number text-white/15 !text-5xl">{a.n}</span>
+            </div>
+            <h3 class="text-white font-display font-bold text-xl mb-2">{a.title}</h3>
+            <p class="text-white/65 text-[0.95rem] leading-relaxed text-pretty">{a.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- Leistungen -->
   <section class="section-paper py-18 md:py-24 relative overflow-hidden">
+    <div class="mesh" aria-hidden="true"></div>
     <div class="container-px relative">
       <SectionHeading
         eyebrow="Service"
@@ -57,8 +88,7 @@ const produkte = services.filter((s) => s.kind === 'produkt');
           </article>
         ))}
       </div>
-      <!-- Weitere Leistungen -->
-      <div class="mt-8 card !p-6 md:!p-8 flex flex-col sm:flex-row sm:items-center gap-5 fade-in">
+      <div class="mt-8 card lg-panel !p-6 md:!p-8 flex flex-col sm:flex-row sm:items-center gap-5 fade-in">
         <div class="flex items-center gap-3 flex-shrink-0">
           <span class="tile-icon tile-icon-marine"><Icon name="Wrench" size={22} strokeWidth={2} /></span>
           <h3 class="font-display font-bold text-ink text-lg">Außerdem für Sie</h3>
@@ -72,8 +102,23 @@ const produkte = services.filter((s) => s.kind === 'produkt');
     </div>
   </section>
 
+  <!-- Bild-Band -->
+  <section class="relative h-[38vh] min-h-[300px] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 -z-10" data-parallax="0.16">
+      <picture>
+        <source type="image/webp" srcset="/images/vista-pool.webp" />
+        <img src="/images/vista-pool.jpg" alt="Ruhiges Becken mit Blick in die Weite" width="1000" height="750" class="w-full h-[130%] object-cover" loading="lazy" />
+      </picture>
+    </div>
+    <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, rgb(5 24 28 / 0.68), rgb(5 24 28 / 0.55));" aria-hidden="true"></div>
+    <div class="container-px relative text-center fade-in">
+      <p class="accent-serif text-white text-2xl md:text-4xl hero-text-shadow max-w-2xl mx-auto">„Vertrauen Sie uns Ihr Kleinod an."</p>
+    </div>
+  </section>
+
   <!-- Produkte -->
   <section id="produkte" class="section-foam py-18 md:py-24 relative overflow-hidden scroll-mt-24">
+    <div class="mesh" aria-hidden="true"></div>
     <div class="container-px relative">
       <SectionHeading
         eyebrow="Produkte & Technik"
@@ -82,7 +127,7 @@ const produkte = services.filter((s) => s.kind === 'produkt');
       />
       <div class="grid md:grid-cols-2 gap-5 mt-12">
         {produkte.map((s, i) => (
-          <article id={s.slug} class={`card scroll-mt-28 fade-in stagger-${(i % 2) + 1}`}>
+          <article id={s.slug} class={`card lg-panel scroll-mt-28 fade-in stagger-${(i % 2) + 1}`}>
             <div class="flex items-start gap-4 mb-4">
               <span class="tile-icon flex-shrink-0"><Icon name={s.icon} size={24} strokeWidth={1.9} /></span>
               <div>
@@ -99,8 +144,7 @@ const produkte = services.filter((s) => s.kind === 'produkt');
           </article>
         ))}
       </div>
-      <!-- Weitere Produkte -->
-      <div class="mt-8 card !p-6 md:!p-8 fade-in">
+      <div class="mt-8 card lg-panel !p-6 md:!p-8 fade-in">
         <div class="flex items-center gap-3 mb-4">
           <span class="tile-icon tile-icon-marine"><Icon name="WavesLadder" size={22} strokeWidth={2} /></span>
           <h3 class="font-display font-bold text-ink text-lg">Weiteres Zubehör & Produkte</h3>

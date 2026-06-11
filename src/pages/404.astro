@@ -2,21 +2,35 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import { telMobile, site } from '../data/site';
+
+const links = [
+  { href: '/', label: 'Startseite', icon: 'WavesLadder' },
+  { href: '/leistungen', label: 'Leistungen', icon: 'Wrench' },
+  { href: '/kontakt', label: 'Kontakt', icon: 'MessageCircle' },
+];
 ---
 <Layout title="Seite nicht gefunden · Pool-System-Service" noindex={true} current="">
-  <section class="section-paper min-h-[80vh] flex items-center relative overflow-hidden">
-    <span class="ghost-mark left-1/2 -translate-x-1/2 top-10 opacity-60" data-text="404" aria-hidden="true"></span>
+  <section class="section-paper min-h-[88vh] flex items-center relative overflow-hidden">
+    <div class="mesh" aria-hidden="true"></div>
+    <span class="ghost-mark left-1/2 -translate-x-1/2 top-6 opacity-50" data-text="404" aria-hidden="true"></span>
     <div class="caustics caustics-soft" aria-hidden="true"></div>
-    <div class="container-px relative text-center max-w-xl mx-auto">
-      <img src="/dino.png" alt="" width="86" height="40" class="h-12 w-auto mx-auto mb-6" />
-      <span class="eyebrow eyebrow-center mb-5">Fehler 404</span>
-      <h1 class="heading-xl text-balance mb-5">Diese Seite ist wohl <span class="accent-serif accent-water">untergetaucht.</span></h1>
-      <p class="text-lg text-muted mb-9 text-pretty">
-        Die gesuchte Seite gibt es nicht (mehr). Kein Problem - zurück ins klare Wasser:
-      </p>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center">
-        <a href="/" class="btn btn-marine btn-lg">Zur Startseite<Icon name="ArrowRight" size={16} strokeWidth={2.4} /></a>
-        <a href={telMobile} class="btn btn-outline btn-lg"><Icon name="Phone" size={15} strokeWidth={2.2} />{site.phoneMobile}</a>
+    <div class="container-px relative w-full">
+      <div class="lg lg-light rounded-[32px] max-w-2xl mx-auto p-8 md:p-12 text-center">
+        <img src="/dino.png" alt="" width="86" height="40" class="h-14 w-auto mx-auto mb-6" />
+        <span class="eyebrow eyebrow-center mb-5">Fehler 404</span>
+        <h1 class="heading-xl text-balance mb-5">Diese Seite ist wohl <span class="accent-serif accent-water">untergetaucht.</span></h1>
+        <p class="text-lg text-muted mb-8 text-pretty max-w-md mx-auto">
+          Die gesuchte Seite gibt es nicht (mehr). Kein Problem - zurück ins klare Wasser:
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
+          <a href="/" class="btn btn-marine btn-lg">Zur Startseite<Icon name="ArrowRight" size={16} strokeWidth={2.4} /></a>
+          <a href={telMobile} class="btn btn-outline btn-lg"><Icon name="Phone" size={15} strokeWidth={2.2} />{site.phoneMobile}</a>
+        </div>
+        <div class="flex flex-wrap gap-2.5 justify-center pt-6 border-t border-line">
+          {links.map((l) => (
+            <a href={l.href} class="tag"><Icon name={l.icon} size={14} strokeWidth={2.2} class="text-aqua-deep" />{l.label}</a>
+          ))}
+        </div>
       </div>
     </div>
   </section>
