@@ -1,5 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import StatBand from '../components/StatBand.astro';
+import SeasonExplorer from '../components/SeasonExplorer.astro';
+import Concierge from '../components/Concierge.astro';
+import ReviewsBlock from '../components/ReviewsBlock.astro';
 import CtaBand from '../components/CtaBand.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import MapBlock from '../components/MapBlock.astro';
@@ -7,7 +11,6 @@ import Icon from '../components/Icon.astro';
 import { site, telMobile, telLandline, mailLink, trustStrip } from '../data/site';
 import { homeServices } from '../data/services';
 
-// Steckbrief — belegt aus der alten „Unternehmen"-Seite (verbatim)
 const facts = [
   { icon: 'Award', label: 'Gegründet', value: '1991' },
   { icon: 'ShieldCheck', label: 'TÜV-geprüft', value: 'seit 2004' },
@@ -15,7 +18,7 @@ const facts = [
   { icon: 'Microscope', label: 'Wasseranalyse', value: 'Partner Gesundheitsamt München' },
 ];
 
-// Foto-Showcase (echte Fotos der alten Site)
+// Foto-Showcase: ECHTE Kundenfotos der alten Site
 const photos = [
   { src: '/images/pool-3', alt: 'Schwimmbad-Überdachung mit Blick zum Ammersee', cap: 'Überdachung am See', cat: 'garten' },
   { src: '/images/pool-1', alt: 'Mediterrane Beckenlandschaft mit türkisem Mosaikwasser', cap: 'Beckenlandschaft', cat: 'garten' },
@@ -33,21 +36,14 @@ const filters = [
 <Layout
   title="Pool-System-Service · Schwimmbad & Meer · Inning am Ammersee"
   current="/"
-  heroPreload={{ srcset: '/images/hero-water-768.webp 768w, /images/hero-water-1280.webp 1280w, /images/hero-water-1920.webp 1920w', sizes: '100vw' }}
+  heroPreload={{ srcset: '/images/hero-pool-768.webp 768w, /images/hero-pool-1280.webp 1280w, /images/hero-pool-1920.webp 1920w', sizes: '100vw' }}
 >
   <!-- ════════ 1 · HERO ════════ -->
-  <section class="relative min-h-[92vh] flex items-end overflow-hidden">
+  <section class="relative min-h-[94vh] flex items-end overflow-hidden">
     <picture class="absolute inset-0 -z-10">
-      <source type="image/webp" srcset="/images/hero-water-768.webp 768w, /images/hero-water-1280.webp 1280w, /images/hero-water-1920.webp 1920w" sizes="100vw" />
-      <img
-        src="/images/hero-water-1280.jpg"
-        srcset="/images/hero-water-768.jpg 768w, /images/hero-water-1280.jpg 1280w, /images/hero-water-1920.jpg 1920w"
-        sizes="100vw"
-        alt="Türkisblaues, kristallklares Beckenwasser"
-        width="1920" height="1280"
-        class="w-full h-full object-cover"
-        loading="eager"
-      />
+      <source type="image/webp" srcset="/images/hero-pool-768.webp 768w, /images/hero-pool-1280.webp 1280w, /images/hero-pool-1920.webp 1920w" sizes="100vw" />
+      <img src="/images/hero-pool-1280.jpg" srcset="/images/hero-pool-768.jpg 768w, /images/hero-pool-1280.jpg 1280w, /images/hero-pool-1920.jpg 1920w" sizes="100vw"
+        alt="Kristallklares, türkisfarbenes Beckenwasser im Sonnenlicht" width="1920" height="1280" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" />
     </picture>
     <div class="absolute inset-0 -z-10 hero-overlay" aria-hidden="true"></div>
     <div class="caustics" aria-hidden="true"></div>
@@ -97,14 +93,22 @@ const filters = [
         </div>
       </div>
 
-      <!-- Trust-Strip -->
       <div class="trust-strip text-white/65 mt-9">
         {trustStrip.map((t) => <span>{t}</span>)}
       </div>
     </div>
+
+    <!-- Scroll-Cue -->
+    <a href="#ueber" class="absolute left-1/2 -translate-x-1/2 bottom-5 hidden md:flex flex-col items-center gap-1.5 text-white/55 hover:text-white transition group" aria-label="Weiter">
+      <span class="font-mono text-[0.6rem] uppercase tracking-[0.2em]">Entdecken</span>
+      <span class="scroll-cue"><Icon name="ChevronDown" size={18} strokeWidth={2.4} /></span>
+    </a>
   </section>
 
-  <!-- ════════ 2 · ÜBER / PERSÖNLICHE BERATUNG ════════ -->
+  <!-- ════════ 2 · KENNZAHLEN ════════ -->
+  <StatBand />
+
+  <!-- ════════ 3 · ÜBER ════════ -->
   <section id="ueber" class="section-paper py-20 md:py-28 relative overflow-hidden scroll-mt-24">
     <span class="ghost-mark -left-16 top-10 opacity-60" data-text="1991" data-parallax="0.05" aria-hidden="true"></span>
     <div class="container-px relative">
@@ -136,8 +140,8 @@ const filters = [
           <div class="relative">
             <div class="photo-frame" data-tilt="3">
               <picture>
-                <source type="image/webp" srcset="/images/pool-3.webp" />
-                <img src="/images/pool-3.jpg" alt="Schwimmbad-Überdachung mit Blick zum Ammersee" width="480" height="360" class="w-full aspect-[4/3] object-cover" loading="lazy" />
+                <source type="image/webp" srcset="/images/about-pool.webp" />
+                <img src="/images/about-pool.jpg" alt="Gepflegtes Becken an einer modernen Villa im Grünen" width="1000" height="750" class="w-full aspect-[4/3] object-cover" loading="lazy" />
               </picture>
             </div>
             <div class="card-glass rounded-2xl p-4 absolute -bottom-5 -left-5 shadow-xl hidden sm:flex items-center gap-3">
@@ -151,7 +155,6 @@ const filters = [
         </div>
       </div>
 
-      <!-- Steckbrief / Credentials (belegt) -->
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
         {facts.map((f, i) => (
           <div class={`tile fade-in stagger-${i + 1}`}>
@@ -168,7 +171,13 @@ const filters = [
     </div>
   </section>
 
-  <!-- ════════ 3 · LEISTUNGS-BEREICHE ════════ -->
+  <!-- ════════ 4 · SAISON-EXPLORER (interaktiv) ════════ -->
+  <SeasonExplorer />
+
+  <!-- ════════ 5 · CONCIERGE (interaktiv) ════════ -->
+  <Concierge />
+
+  <!-- ════════ 6 · LEISTUNGEN ════════ -->
   <section class="section-foam py-20 md:py-28 relative overflow-hidden">
     <div class="container-px relative">
       <SectionHeading
@@ -195,16 +204,32 @@ const filters = [
     </div>
   </section>
 
-  <!-- ════════ 4 · FOTO-SHOWCASE (Dark + interaktiv) ════════ -->
+  <!-- ════════ 7 · PARALLAX-BRAND-BAND ════════ -->
+  <section class="relative h-[44vh] min-h-[340px] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 -z-10" data-parallax="0.18">
+      <picture>
+        <source type="image/webp" srcset="/images/vista-pool.webp" />
+        <img src="/images/vista-pool.jpg" alt="Infinity-Pool mit Blick in die Weite" width="1000" height="750" class="w-full h-[130%] object-cover" loading="lazy" />
+      </picture>
+    </div>
+    <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, rgb(5 24 28 / 0.7), rgb(5 24 28 / 0.55));" aria-hidden="true"></div>
+    <div class="caustics caustics-soft" aria-hidden="true"></div>
+    <div class="container-px relative text-center fade-in">
+      <p class="font-mono text-[0.72rem] uppercase tracking-[0.24em] text-aqua-bright mb-4">Ihr kompetenter Partner</p>
+      <p class="heading-xl text-white hero-text-shadow">Schwimmbad &amp; <span class="accent-serif accent-glow">Meer.</span></p>
+    </div>
+  </section>
+
+  <!-- ════════ 8 · ECHTE EINBLICKE (Dark + interaktiv) ════════ -->
   <section class="section-marine aqua-horizon py-20 md:py-28 relative overflow-hidden">
     <div class="caustics caustics-soft" aria-hidden="true"></div>
     <div class="container-px relative">
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
         <div class="max-w-2xl fade-in">
-          <span class="eyebrow eyebrow-light mb-5">Einblicke</span>
-          <h2 class="heading-lg text-white text-balance">Einblicke in unsere <span class="accent-serif accent-glow">Arbeit.</span></h2>
+          <span class="eyebrow eyebrow-light mb-5">Echte Einblicke</span>
+          <h2 class="heading-lg text-white text-balance">Aus unserer <span class="accent-serif accent-glow">Praxis.</span></h2>
+          <p class="text-white/65 mt-3 text-pretty">Originalaufnahmen von Becken, die wir betreuen - rund um den Ammersee.</p>
         </div>
-        <!-- Pill-Filter -->
         <div id="gallery-filter" class="flex flex-wrap gap-2 fade-in" role="tablist" aria-label="Fotos filtern">
           {filters.map((f, i) => (
             <button class={`pill pill-dark gallery-pill ${i === 0 ? 'is-active' : ''}`} data-filter={f.id} role="tab" aria-selected={i === 0 ? 'true' : 'false'}>{f.label}</button>
@@ -214,13 +239,7 @@ const filters = [
 
       <div id="gallery-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {photos.map((p, i) => (
-          <button
-            class={`media-card gallery-item fade-in stagger-${(i % 3) + 1}`}
-            data-cat={p.cat}
-            data-full={`${p.src}.jpg`}
-            data-alt={p.alt}
-            aria-label={`${p.cap} - vergrößern`}
-          >
+          <button class={`media-card gallery-item fade-in stagger-${(i % 3) + 1}`} data-cat={p.cat} data-full={`${p.src}.jpg`} data-alt={p.alt} aria-label={`${p.cap} - vergrößern`}>
             <picture>
               <source type="image/webp" srcset={`${p.src}.webp`} />
               <img src={`${p.src}.jpg`} alt={p.alt} width="480" height="360" class="w-full h-full object-cover" loading="lazy" />
@@ -233,7 +252,6 @@ const filters = [
             </div>
           </button>
         ))}
-        <!-- Abschluss-Tile (nur bei „Alle") -->
         <a href="/kontakt" class="gallery-item card-dark flex flex-col justify-between !p-6 group" data-cat="cta">
           <Icon name="WavesLadder" size={28} strokeWidth={1.8} class="text-aqua-bright" />
           <div>
@@ -246,7 +264,7 @@ const filters = [
     </div>
   </section>
 
-  <!-- ════════ 5 · REGION ════════ -->
+  <!-- ════════ 9 · REGION ════════ -->
   <section id="region" class="section-paper py-20 md:py-28 relative overflow-hidden scroll-mt-24">
     <span class="ghost-mark -right-10 -bottom-16 opacity-50" data-text="SEE" data-parallax="0.05" aria-hidden="true"></span>
     <div class="container-px relative">
@@ -257,49 +275,29 @@ const filters = [
           <p class="text-lg text-muted leading-relaxed mb-7 text-pretty">
             Unser Sitz ist Inning am Ammersee - für Kundinnen und Kunden im Fünfseenland, rund um den Ammersee und westlich von München. Persönlich, mit kurzen Wegen und einem offenen Ohr für Ihr Becken.
           </p>
-          <div class="flex flex-wrap gap-2.5">
+          <div class="flex flex-wrap gap-2.5 mb-8">
             {['Inning am Ammersee', 'Ammersee', 'Fünfseenland', 'Starnberg', 'München (West)'].map((r) => (
               <span class="tag"><Icon name="MapPin" size={14} strokeWidth={2.2} class="text-aqua-deep" />{r}</span>
             ))}
           </div>
-          <p class="text-sm text-muted-light mt-6 flex items-center gap-2">
-            <Icon name="Sailboat" size={16} strokeWidth={2} class="text-aqua-deep" />
-            Service-Radius im Detail? Sprechen Sie uns an - wir sagen Ihnen offen, ob wir zu Ihnen kommen.
-          </p>
+          <div class="photo-frame" data-tilt="2">
+            <picture>
+              <source type="image/webp" srcset="/images/region-lake.webp" />
+              <img src="/images/region-lake.jpg" alt="Voralpensee im Fünfseenland - unsere Heimatregion" width="1000" height="750" class="w-full aspect-[16/9] object-cover" loading="lazy" />
+            </picture>
+          </div>
         </div>
         <div class="fade-in stagger-2">
-          <MapBlock class="aspect-[4/3] lg:aspect-auto lg:h-[420px]" />
+          <MapBlock class="h-full min-h-[420px] lg:min-h-[560px]" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ════════ 6 · BEWERTUNGEN (Google, echt - keine erfundenen) ════════ -->
-  <section class="section-foam py-16 md:py-20 relative overflow-hidden">
-    <div class="container-px relative">
-      <div class="card rounded-3xl !p-8 md:!p-12 flex flex-col lg:flex-row lg:items-center gap-8 fade-in">
-        <div class="flex-1">
-          <span class="eyebrow mb-4">Stimmen unserer Kunden</span>
-          <h2 class="heading-md text-balance mb-3">Lesen Sie, was Kundinnen und Kunden bei <span class="accent-serif accent-water">Google</span> sagen.</h2>
-          <p class="text-muted text-pretty max-w-xl">
-            Echte Bewertungen statt schöner Worte: Auf unserem Google-Profil finden Sie Erfahrungen rund um Beratung, Service und Sanierung - und können selbst eine hinterlassen.
-          </p>
-        </div>
-        <div class="flex flex-col gap-3 flex-shrink-0">
-          <a href={site.googleReviewsUrl} target="_blank" rel="noopener" class="btn btn-marine btn-lg">
-            <Icon name="Star" size={16} strokeWidth={2.2} />
-            Google-Bewertungen ansehen
-          </a>
-          <a href={telMobile} class="btn btn-outline">
-            <Icon name="Phone" size={15} strokeWidth={2.2} />
-            {site.phoneMobile}
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- ════════ 10 · BEWERTUNG & VERTRAUEN ════════ -->
+  <ReviewsBlock />
 
-  <!-- ════════ 7 · KONTAKT + STANDORT ════════ -->
+  <!-- ════════ 11 · KONTAKT ════════ -->
   <section id="kontakt-anker" class="section-paper py-20 md:py-28 relative overflow-hidden scroll-mt-24">
     <div class="container-px relative">
       <SectionHeading
@@ -337,7 +335,7 @@ const filters = [
     </div>
   </section>
 
-  <!-- ════════ 8 · FINAL CTA-BAND ════════ -->
+  <!-- ════════ 12 · FINAL CTA ════════ -->
   <CtaBand />
 </Layout>
 
@@ -352,27 +350,25 @@ const filters = [
   </figure>
 </div>
 
+<style>
+  .gallery-pill.is-active { background: rgb(var(--rgb-aqua-deep)); color: #fff; border-color: rgb(var(--rgb-aqua-deep)); }
+  .scroll-cue { animation: cue-bob 1.8s ease-in-out infinite; }
+  @keyframes cue-bob { 0%,100% { transform: translateY(0); opacity: 0.6; } 50% { transform: translateY(5px); opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .scroll-cue { animation: none; } }
+</style>
+
 <script>
   document.addEventListener('astro:page-load', () => {
-    // ── Gallery-Filter ──
     const pills = document.querySelectorAll<HTMLButtonElement>('.gallery-pill');
     const items = document.querySelectorAll<HTMLElement>('.gallery-item');
     pills.forEach((pill) => {
       pill.addEventListener('click', () => {
         const f = pill.dataset.filter;
-        pills.forEach((p) => {
-          p.classList.toggle('is-active', p === pill);
-          p.setAttribute('aria-selected', p === pill ? 'true' : 'false');
-        });
-        items.forEach((it) => {
-          const cat = it.dataset.cat;
-          const visible = f === 'alle' ? true : cat === f;
-          it.style.display = visible ? '' : 'none';
-        });
+        pills.forEach((p) => { p.classList.toggle('is-active', p === pill); p.setAttribute('aria-selected', p === pill ? 'true' : 'false'); });
+        items.forEach((it) => { it.style.display = f === 'alle' ? '' : (it.dataset.cat === f ? '' : 'none'); });
       });
     });
 
-    // ── Lightbox ──
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
     const lbCap = document.getElementById('lightbox-cap');
@@ -383,11 +379,7 @@ const filters = [
       lb.classList.remove('hidden'); lb.classList.add('flex');
       document.body.style.overflow = 'hidden';
     };
-    const close = () => {
-      if (!lb) return;
-      lb.classList.add('hidden'); lb.classList.remove('flex');
-      document.body.style.overflow = '';
-    };
+    const close = () => { if (!lb) return; lb.classList.add('hidden'); lb.classList.remove('flex'); document.body.style.overflow = ''; };
     document.querySelectorAll<HTMLElement>('.media-card.gallery-item').forEach((card) => {
       card.addEventListener('click', () => open(card.dataset.full || '', card.dataset.alt || ''));
     });
@@ -396,7 +388,3 @@ const filters = [
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
   });
 </script>
-
-<style>
-  .gallery-pill.is-active { background: rgb(var(--rgb-aqua-deep)); color: #fff; border-color: rgb(var(--rgb-aqua-deep)); }
-</style>

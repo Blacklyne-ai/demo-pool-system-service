@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
+import Concierge from '../components/Concierge.astro';
 import CtaBand from '../components/CtaBand.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Icon from '../components/Icon.astro';
@@ -21,9 +22,9 @@ const produkte = services.filter((s) => s.kind === 'produkt');
     crumb="Leistungen"
     title="Alles rund ums <em>Schwimmbad.</em>"
     subtitle="Wir unterstützen Sie, Ihren Badetraum zu planen, zu bauen oder zu pflegen - und helfen, Probleme zu erkennen und zu beseitigen. Alle Leistungen aus einer Hand, persönlich begleitet."
-    image="/images/pool-1.jpg"
-    imageWebp="/images/pool-1.webp"
-    imageAlt="Türkises Mosaikwasser einer mediterranen Beckenlandschaft"
+    image="/images/modern-pool.jpg"
+    imageWebp="/images/modern-pool.webp"
+    imageAlt="Gepflegtes Becken an einer modernen Villa"
     ghost="POOL"
     primary={{ href: '/kontakt', label: 'Beratung anfragen' }}
     secondary={{ href: '#produkte', label: 'Zu den Produkten' }}
@@ -120,6 +121,8 @@ const produkte = services.filter((s) => s.kind === 'produkt');
       </div>
     </div>
   </section>
+
+  <Concierge />
 
   <CtaBand title="Welches Thema steht bei Ihnen <em>an?</em>" />
 </Layout>

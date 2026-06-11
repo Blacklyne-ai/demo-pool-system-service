@@ -18,7 +18,8 @@ Unterseiten, `products` + 6 Produkt-Unterseiten, `contact`, `impressum`. Daraus 
 | 1 | **Öffnungszeiten** | Auf alter Site nicht vorhanden → „Termine nach Vereinbarung" als Status. Falls feste Zeiten existieren: ergänzen. |
 | 2 | **USt-IdNr / Steuernummer** | Im alten Impressum nicht gelistet. Einzelunternehmen - bei Umsatzsteuerpflicht USt-IdNr im Impressum ergänzen. |
 | 3 | **WhatsApp** | Kontakt-Tile + Buttons verlinken `wa.me/491714755811` (die Mobilnummer). **Bitte bestätigen, dass diese Nummer WhatsApp nutzt** - sonst Button entfernen (Datei `src/data/site.ts`, `whatsappUrl`). |
-| 4 | **Google-Bewertungen (live)** | Echte Reviews lassen sich nur über die **Google Places API (API-Key, kostenpflichtig)** einbetten. Ohne Key wurden **keine Reviews erfunden** - stattdessen verlinkt Abschnitt „Stimmen unserer Kunden" auf das echte Google-Profil. Operator: Places-API-Key liefern, dann Live-Section nachrüsten. |
+| 4 | **Google-Bewertungen** | Das echte Google-Profil hat eine verifizierte Bewertung von **4,3 ★** (Stand 06/2026), aber **keine öffentlichen Rezensionstexte** (die Listung ist dünn - Google fragt selbst nach Öffnungszeiten/Fotos). Daher: echte 4,3★ + belegte Credentials werden angezeigt, **keine Rezensionstexte erfunden**. Für eine Live-Rezensions-Wand bitte (a) Kund:innen um Google-Rezensionen bitten und (b) einen **Places-API-Key** liefern - dann baue ich die Live-Section. |
+| 4b | **Bilder** | Originalseite hatte nur 5 kleine Fotos (≤480px). Für Hero & Stimmungs-Sektionen jetzt **lizenzfreie Stockfotos** (Unsplash-Lizenz, kommerziell ok). Die **echten Kundenfotos** bleiben bewusst in der Galerie „Aus unserer Praxis" (Authentizität) - inkl. des stimmungsvollen Winter-Nachtfotos in der Jahreszeiten-Story. Falls eigene aktuelle Projektfotos vorhanden: gerne schicken, ersetzen wir Stock 1:1. |
 | 5 | **Datenschutzerklärung** | DSGVO-Template (alte Site hatte keine). Vor Live-Gang juristisch prüfen lassen; Hosting-Provider (Cloudflare Pages) ggf. konkret benennen, Auftragsverarbeitung. |
 | 6 | **Service-Radius** | Nicht exakt belegt → Region als „Ammersee · Fünfseenland · westlich von München" benannt, konkreter Radius offen gelassen („sprechen Sie uns an"). Bei Bedarf präzisieren. |
 | 7 | **Credentials aktuell?** | Belegt aus alter Site: „Partner des Gesundheitsamts München", „Zusammenarbeit Institut Fresenius (Mikrobiologie)", „TÜV-geprüft seit 2004". Bitte bestätigen, dass diese noch aktuell sind. |
@@ -44,7 +45,10 @@ Unterseiten, `products` + 6 Produkt-Unterseiten, `contact`, `impressum`. Daraus 
 - **Hero-Bild**: `bg_water.jpg` (1000×667, einziges großes Asset, enthält eine Drachen-Statue -
   echoet den Dino) hochskaliert zu responsivem Set. Die 5 Original-Fotos (≤480px) im Showcase
   bei moderater Größe; 2 Winter-Fotos ehrlich als „Ganzjährig" gelabelt (zeigen Schnee).
-- **Interaktiv**: Foto-Showcase mit Pill-Filter (Alle/Garten/Ganzjährig) + Lightbox.
+- **Interaktiv** (interaktive Geschichten, auf belegte Leistungen gemappt - nichts erfunden):
+  - **„Ihr Pool durchs Jahr"** - Saison-Explorer (Frühjahr/Sommer/Herbst/Winter, Tab-Wechsel).
+  - **„Wobei dürfen wir helfen?"** - Concierge: Anliegen anklicken → passende Lösung (Home + Leistungen).
+  - Kennzahlen-Band mit Count-up + echter 4,3★-Google-Bewertung, Foto-Galerie mit Pill-Filter + Lightbox, Scroll-Fortschrittsbalken, Parallax-Brand-Band.
 
 ## Deploy
 Cloudflare **Pages** · Framework-Preset Astro · Build `npm run build` · Output `dist` ·

@@ -1,0 +1,34 @@
+---
+// Kennzahlen-Band (Dark) - belegte Fakten + echte Google-Bewertung.
+// Count-up via globale [data-count]-Engine (Layout.astro).
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+---
+<section class="section-marine relative overflow-hidden py-12 md:py-14">
+  <div class="caustics caustics-soft" aria-hidden="true"></div>
+  <div class="container-px relative">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-9 divide-y sm:divide-y-0 lg:divide-x divide-white/10">
+      <div class="text-center px-2 fade-in">
+        <div class="big-number text-white !text-4xl md:!text-5xl">1991</div>
+        <div class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-aqua-bright mt-2">Gegründet</div>
+      </div>
+      <div class="text-center px-2 fade-in stagger-1">
+        <div class="big-number text-white !text-4xl md:!text-5xl"><span data-count="30" data-suffix="+">0</span></div>
+        <div class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-aqua-bright mt-2">Jahre Erfahrung</div>
+      </div>
+      <div class="text-center px-2 fade-in stagger-2 pt-9 sm:pt-0">
+        <div class="flex items-center justify-center gap-2">
+          <span class="big-number text-white !text-4xl md:!text-5xl">{site.googleRating}</span>
+          <span class="stars" aria-hidden="true">
+            {Array.from({ length: 5 }).map(() => <Icon name="Star" size={15} strokeWidth={0} />)}
+          </span>
+        </div>
+        <div class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-aqua-bright mt-2">Google-Bewertung</div>
+      </div>
+      <div class="text-center px-2 fade-in stagger-3 pt-9 sm:pt-0">
+        <div class="big-number text-white !text-4xl md:!text-5xl inline-flex items-center gap-2"><Icon name="ShieldCheck" size={34} strokeWidth={1.8} class="text-aqua-bright" />TÜV</div>
+        <div class="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-aqua-bright mt-2">geprüft seit 2004</div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -47,6 +47,7 @@ export const site = {
   // Google — Place-ID (ftid) aus dem alten Maps-Embed, CID daraus berechnet
   googlePlaceId: '0x479c2c8a20c5c1b1:0xff0dcf3c585bc4d2',
   googleCid: '18378573512456258770',
+  googleRating: '4,3', // ECHTE Google-Bewertung (verifiziert, Stand 06/2026). Keine Einzeltexte öffentlich → nicht erfunden.
   googleMapsEmbed:
     'https://www.google.com/maps?q=Pool-System-Service,+Münchner+Straße+51,+82266+Inning+am+Ammersee&z=15&output=embed',
   googleMapsUrl: 'https://www.google.com/maps?cid=18378573512456258770',
