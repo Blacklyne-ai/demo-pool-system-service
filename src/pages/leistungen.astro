@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import { services, weitereLeistungen, weitereProdukte } from '../data/services';
+import { telMobile } from '../data/site';
+
+const leistungen = services.filter((s) => s.kind === 'leistung');
+const produkte = services.filter((s) => s.kind === 'produkt');
+---
+
+<Layout
+  title="Leistungen & Produkte · Pool-System-Service"
+  description="Sanierung, Grundreinigung, Solartechnik, Filter- und Regeltechnik, Reinigungsroboter und mehr - alle Leistungen rund ums Schwimmbad aus einer Hand. Inning am Ammersee."
+  current="/leistungen"
+>
+  <PageHero
+    eyebrow="Leistungen"
+    crumb="Leistungen"
+    title="Alles rund ums <em>Schwimmbad.</em>"
+    subtitle="Wir unterstützen Sie, Ihren Badetraum zu planen, zu bauen oder zu pflegen - und helfen, Probleme zu erkennen und zu beseitigen. Alle Leistungen aus einer Hand, persönlich begleitet."
+    image="/images/pool-1.jpg"
+    imageWebp="/images/pool-1.webp"
+    imageAlt="Türkises Mosaikwasser einer mediterranen Beckenlandschaft"
+    ghost="POOL"
+    primary={{ href: '/kontakt', label: 'Beratung anfragen' }}
+    secondary={{ href: '#produkte', label: 'Zu den Produkten' }}
+  />
+
+  <!-- Leistungen -->
+  <section class="section-paper py-18 md:py-24 relative overflow-hidden">
+    <div class="container-px relative">
+      <SectionHeading
+        eyebrow="Service"
+        title="Unsere <em>Leistungen.</em>"
+        intro="Vertrauen Sie uns Ihr Kleinod an - und wir verhelfen Ihnen zu ungetrübtem Badevergnügen."
+      />
+      <div class="grid md:grid-cols-2 gap-5 mt-12">
+        {leistungen.map((s, i) => (
+          <article id={s.slug} class={`card-feature scroll-mt-28 fade-in stagger-${(i % 2) + 1}`}>
+            <div class="flex items-start gap-4 mb-4">
+              <span class="tile-icon flex-shrink-0"><Icon name={s.icon} size={24} strokeWidth={1.9} /></span>
+              <div>
+                <h2 class="heading-md">{s.name}</h2>
+                <p class="text-[0.92rem] font-display font-semibold text-aqua-deep mt-0.5">{s.tagline}</p>
+              </div>
+            </div>
+            <p class="text-muted leading-relaxed text-pretty">{s.blurb}</p>
+            {s.points && (
+              <div class="flex flex-wrap gap-2 mt-5">
+                {s.points.map((p) => <span class="pill pill-sand">{p}</span>)}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+      <!-- Weitere Leistungen -->
+      <div class="mt-8 card !p-6 md:!p-8 flex flex-col sm:flex-row sm:items-center gap-5 fade-in">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <span class="tile-icon tile-icon-marine"><Icon name="Wrench" size={22} strokeWidth={2} /></span>
+          <h3 class="font-display font-bold text-ink text-lg">Außerdem für Sie</h3>
+        </div>
+        <div class="flex flex-wrap gap-2.5">
+          {weitereLeistungen.map((w) => (
+            <span class="tag"><Icon name="Check" size={14} strokeWidth={2.6} class="text-aqua-deep" />{w}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Produkte -->
+  <section id="produkte" class="section-foam py-18 md:py-24 relative overflow-hidden scroll-mt-24">
+    <div class="container-px relative">
+      <SectionHeading
+        eyebrow="Produkte & Technik"
+        title="Technik, die <em>passt.</em>"
+        intro="Gerne beraten wir Sie bei der Auswahl der richtigen Produkte und bauen die Komponenten selbstverständlich für Sie ein. Ein Auszug - weiteres auf Anfrage."
+      />
+      <div class="grid md:grid-cols-2 gap-5 mt-12">
+        {produkte.map((s, i) => (
+          <article id={s.slug} class={`card scroll-mt-28 fade-in stagger-${(i % 2) + 1}`}>
+            <div class="flex items-start gap-4 mb-4">
+              <span class="tile-icon flex-shrink-0"><Icon name={s.icon} size={24} strokeWidth={1.9} /></span>
+              <div>
+                <h2 class="heading-md">{s.name}</h2>
+                <p class="text-[0.92rem] font-display font-semibold text-aqua-deep mt-0.5">{s.tagline}</p>
+              </div>
+            </div>
+            <p class="text-muted leading-relaxed text-pretty">{s.blurb}</p>
+            {s.points && (
+              <div class="flex flex-wrap gap-2 mt-5">
+                {s.points.map((p) => <span class="pill pill-sand">{p}</span>)}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+      <!-- Weitere Produkte -->
+      <div class="mt-8 card !p-6 md:!p-8 fade-in">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="tile-icon tile-icon-marine"><Icon name="WavesLadder" size={22} strokeWidth={2} /></span>
+          <h3 class="font-display font-bold text-ink text-lg">Weiteres Zubehör & Produkte</h3>
+        </div>
+        <div class="flex flex-wrap gap-2.5">
+          {weitereProdukte.map((w) => (
+            <span class="tag"><Icon name="Check" size={14} strokeWidth={2.6} class="text-aqua-deep" />{w}</span>
+          ))}
+        </div>
+        <p class="text-sm text-muted-light mt-5">Sprechen Sie uns an - wir finden die passende Lösung für Ihr Becken.</p>
+      </div>
+
+      <div class="mt-10 text-center fade-in">
+        <a href={telMobile} class="btn btn-marine btn-lg">
+          <Icon name="Phone" size={16} strokeWidth={2.3} />
+          Jetzt beraten lassen
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Welches Thema steht bei Ihnen <em>an?</em>" />
+</Layout>

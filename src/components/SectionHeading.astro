@@ -1,0 +1,38 @@
+---
+// Editorial Section-Heading: Eyebrow + Headline (Akzentwort via
+// <em>…</em> im title-String → Fraunces Italic) + optionale Intro/CTA.
+import Icon from './Icon.astro';
+interface Props {
+  eyebrow?: string;
+  title: string; // darf <em>Akzent</em> enthalten
+  intro?: string;
+  align?: 'left' | 'center';
+  light?: boolean;
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+const { eyebrow, title, intro, align = 'left', light = false, ctaHref, ctaLabel } = Astro.props;
+const center = align === 'center';
+---
+<div class={`flex flex-col ${ctaHref ? 'md:flex-row md:items-end md:justify-between gap-6' : center ? 'items-center text-center max-w-2xl mx-auto' : 'max-w-2xl'} fade-in`}>
+  <div class={center ? '' : 'max-w-2xl'}>
+    {eyebrow && <span class={`eyebrow ${light ? 'eyebrow-light' : ''} ${center ? 'eyebrow-center' : ''} mb-5`}>{eyebrow}</span>}
+    <h2 class={`heading-lg text-balance mt-1 section-title ${light ? 'text-white' : ''}`} set:html={title} />
+    {intro && <p class={`text-lg mt-4 text-pretty ${light ? 'text-white/70' : 'text-muted'}`}>{intro}</p>}
+  </div>
+  {ctaHref && ctaLabel && (
+    <a href={ctaHref} class={`btn ${light ? 'btn-light' : 'btn-marine'} self-start md:self-auto flex-shrink-0`}>
+      {ctaLabel}
+      <Icon name="ArrowRight" size={14} strokeWidth={2.5} />
+    </a>
+  )}
+</div>
+
+<style is:global>
+  .section-title em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+</style>

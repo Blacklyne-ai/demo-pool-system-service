@@ -1,0 +1,402 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import MapBlock from '../components/MapBlock.astro';
+import Icon from '../components/Icon.astro';
+import { site, telMobile, telLandline, mailLink, trustStrip } from '../data/site';
+import { homeServices } from '../data/services';
+
+// Steckbrief — belegt aus der alten „Unternehmen"-Seite (verbatim)
+const facts = [
+  { icon: 'Award', label: 'Gegründet', value: '1991' },
+  { icon: 'ShieldCheck', label: 'TÜV-geprüft', value: 'seit 2004' },
+  { icon: 'Building2', label: 'Becken', value: 'Privat & halböffentlich' },
+  { icon: 'Microscope', label: 'Wasseranalyse', value: 'Partner Gesundheitsamt München' },
+];
+
+// Foto-Showcase (echte Fotos der alten Site)
+const photos = [
+  { src: '/images/pool-3', alt: 'Schwimmbad-Überdachung mit Blick zum Ammersee', cap: 'Überdachung am See', cat: 'garten' },
+  { src: '/images/pool-1', alt: 'Mediterrane Beckenlandschaft mit türkisem Mosaikwasser', cap: 'Beckenlandschaft', cat: 'garten' },
+  { src: '/images/pool-2', alt: 'Wasserspeier-Figur am Beckenrand im Grünen', cap: 'Detail am Becken', cat: 'garten' },
+  { src: '/images/pool-4', alt: 'Beleuchtetes Becken in winterlicher Nacht', cap: 'Ganzjährig im Blick', cat: 'ganzjahr' },
+  { src: '/images/pool-5', alt: 'Gepflegtes Becken in der Winterlandschaft', cap: 'Durch jede Jahreszeit', cat: 'ganzjahr' },
+];
+const filters = [
+  { id: 'alle', label: 'Alle' },
+  { id: 'garten', label: 'Garten & Becken' },
+  { id: 'ganzjahr', label: 'Ganzjährig' },
+];
+---
+
+<Layout
+  title="Pool-System-Service · Schwimmbad & Meer · Inning am Ammersee"
+  current="/"
+  heroPreload={{ srcset: '/images/hero-water-768.webp 768w, /images/hero-water-1280.webp 1280w, /images/hero-water-1920.webp 1920w', sizes: '100vw' }}
+>
+  <!-- ════════ 1 · HERO ════════ -->
+  <section class="relative min-h-[92vh] flex items-end overflow-hidden">
+    <picture class="absolute inset-0 -z-10">
+      <source type="image/webp" srcset="/images/hero-water-768.webp 768w, /images/hero-water-1280.webp 1280w, /images/hero-water-1920.webp 1920w" sizes="100vw" />
+      <img
+        src="/images/hero-water-1280.jpg"
+        srcset="/images/hero-water-768.jpg 768w, /images/hero-water-1280.jpg 1280w, /images/hero-water-1920.jpg 1920w"
+        sizes="100vw"
+        alt="Türkisblaues, kristallklares Beckenwasser"
+        width="1920" height="1280"
+        class="w-full h-full object-cover"
+        loading="eager"
+      />
+    </picture>
+    <div class="absolute inset-0 -z-10 hero-overlay" aria-hidden="true"></div>
+    <div class="caustics" aria-hidden="true"></div>
+    <span class="ghost-mark ghost-mark-light right-0 top-20 opacity-70" data-text="MEER" data-parallax="0.06" aria-hidden="true"></span>
+
+    <div class="container-px relative w-full pt-32 pb-12 md:pb-16">
+      <div class="max-w-3xl">
+        <span class="pill pill-dark mb-6">
+          <Icon name="MapPin" size={13} strokeWidth={2.4} />
+          Pool-Service · Inning am Ammersee
+        </span>
+        <h1 class="heading-display text-white hero-text-shadow mb-6">
+          Schwimmbad &amp; <span class="accent-serif accent-glow">Meer</span>.
+        </h1>
+        <p class="text-lg md:text-xl text-white/85 leading-relaxed max-w-2xl mb-9 text-pretty hero-text-shadow">
+          {site.leitsatz} Persönliche Beratung vor Ort - am Ammersee und im Fünfseenland.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href={telMobile} class="btn btn-aqua btn-lg">
+            <Icon name="Phone" size={17} strokeWidth={2.3} />
+            {site.phoneMobile}
+          </a>
+          <a href="/kontakt" class="btn btn-glass btn-lg">
+            Beratung anfragen
+            <Icon name="ArrowRight" size={16} strokeWidth={2.4} />
+          </a>
+        </div>
+      </div>
+
+      <!-- Floating Trust-Cards -->
+      <div class="grid sm:grid-cols-2 gap-3 mt-10 max-w-xl">
+        <div class="card-glass card-glass-dark rounded-2xl p-4 flex items-center gap-3.5">
+          <span class="w-11 h-11 rounded-xl bg-aqua/20 border border-white/15 flex items-center justify-center flex-shrink-0">
+            <Icon name="MapPin" size={20} strokeWidth={2} class="text-aqua-bright" />
+          </span>
+          <div class="leading-tight">
+            <div class="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-white/55">Beratung vor Ort</div>
+            <div class="font-display font-bold text-white text-[0.98rem]">Ammersee &amp; Umgebung</div>
+          </div>
+        </div>
+        <div class="card-glass card-glass-dark rounded-2xl p-4 flex items-center gap-3.5">
+          <img src="/dino.png" alt="" width="86" height="40" class="h-7 w-auto flex-shrink-0" />
+          <div class="leading-tight">
+            <div class="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-white/55">Inhaberin</div>
+            <div class="font-display font-bold text-white text-[0.98rem]">{site.owner}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust-Strip -->
+      <div class="trust-strip text-white/65 mt-9">
+        {trustStrip.map((t) => <span>{t}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 2 · ÜBER / PERSÖNLICHE BERATUNG ════════ -->
+  <section id="ueber" class="section-paper py-20 md:py-28 relative overflow-hidden scroll-mt-24">
+    <span class="ghost-mark -left-16 top-10 opacity-60" data-text="1991" data-parallax="0.05" aria-hidden="true"></span>
+    <div class="container-px relative">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-6 fade-in">
+          <span class="eyebrow mb-5">Über uns</span>
+          <h2 class="heading-lg text-balance mb-6">
+            Persönlich beraten. <span class="accent-serif accent-water">Direkt vor Ort.</span>
+          </h2>
+          <p class="text-lg text-muted leading-relaxed mb-5 text-pretty">
+            Pool-System-Service bietet seit 1991 den kompletten Service rund um das Schwimmbad - von Planung und Bau über Wartung bis zur Sanierung, alles aus einer Hand.
+          </p>
+          <p class="text-lg text-muted leading-relaxed mb-7 text-pretty">
+            Im Mittelpunkt steht die persönliche und intensive Beratung. Unser Team unterstützt Sie gerne vor Ort, um Ihnen den Spaß an Ihrem Kleinod zu erhalten. {site.cta}
+          </p>
+          <div class="flex items-center gap-5 flex-wrap">
+            <a href={telMobile} class="btn btn-marine">
+              <Icon name="Phone" size={16} strokeWidth={2.3} />
+              {site.phoneMobile}
+            </a>
+            <div class="leading-tight">
+              <p class="signature">{site.owner}</p>
+              <p class="text-[0.8rem] text-muted-light font-mono uppercase tracking-[0.14em] mt-0.5">Inhaberin</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 fade-in stagger-2">
+          <div class="relative">
+            <div class="photo-frame" data-tilt="3">
+              <picture>
+                <source type="image/webp" srcset="/images/pool-3.webp" />
+                <img src="/images/pool-3.jpg" alt="Schwimmbad-Überdachung mit Blick zum Ammersee" width="480" height="360" class="w-full aspect-[4/3] object-cover" loading="lazy" />
+              </picture>
+            </div>
+            <div class="card-glass rounded-2xl p-4 absolute -bottom-5 -left-5 shadow-xl hidden sm:flex items-center gap-3">
+              <span class="big-number text-aqua-deep !text-4xl">'91</span>
+              <div class="leading-tight">
+                <div class="font-display font-bold text-ink text-sm">{site.facts.yearsLabel}</div>
+                <div class="text-[0.78rem] text-muted">Erfahrung am Becken</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steckbrief / Credentials (belegt) -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
+        {facts.map((f, i) => (
+          <div class={`tile fade-in stagger-${i + 1}`}>
+            <span class="tile-icon"><Icon name={f.icon} size={22} strokeWidth={2} /></span>
+            <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-light">{f.label}</div>
+            <div class="font-display font-bold text-ink text-[1.05rem] leading-snug">{f.value}</div>
+          </div>
+        ))}
+      </div>
+      <p class="text-sm text-muted-light mt-5 flex items-center gap-2 fade-in">
+        <Icon name="Microscope" size={15} strokeWidth={2} class="text-aqua-deep" />
+        Wasseranalytik in Zusammenarbeit mit dem Institut Fresenius (Mikrobiologie).
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════ 3 · LEISTUNGS-BEREICHE ════════ -->
+  <section class="section-foam py-20 md:py-28 relative overflow-hidden">
+    <div class="container-px relative">
+      <SectionHeading
+        eyebrow="Leistungen"
+        title="Rund um Ihr <em>Schwimmbad.</em>"
+        intro="Alle Leistungen aus einer Hand - belegt, fachgerecht, persönlich begleitet. Sprechen Sie uns auf Ihr Projekt an."
+        ctaHref="/leistungen"
+        ctaLabel="Alle Leistungen"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
+        {homeServices.map((s, i) => (
+          <a href={`/leistungen#${s.slug}`} class={`card-feature group fade-in stagger-${(i % 3) + 1}`}>
+            <span class="tile-icon mb-5"><Icon name={s.icon} size={24} strokeWidth={1.9} /></span>
+            <h3 class="heading-md mb-2 group-hover:text-aqua-deep transition-colors">{s.name}</h3>
+            <p class="text-[0.9rem] font-display font-semibold text-aqua-deep mb-2">{s.tagline}</p>
+            <p class="text-muted text-[0.95rem] leading-relaxed text-pretty">{s.blurb}</p>
+            <span class="arrow-link mt-5 !text-[0.85rem]">
+              Mehr erfahren
+              <Icon name="ArrowRight" size={15} strokeWidth={2.4} />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 4 · FOTO-SHOWCASE (Dark + interaktiv) ════════ -->
+  <section class="section-marine aqua-horizon py-20 md:py-28 relative overflow-hidden">
+    <div class="caustics caustics-soft" aria-hidden="true"></div>
+    <div class="container-px relative">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+        <div class="max-w-2xl fade-in">
+          <span class="eyebrow eyebrow-light mb-5">Einblicke</span>
+          <h2 class="heading-lg text-white text-balance">Einblicke in unsere <span class="accent-serif accent-glow">Arbeit.</span></h2>
+        </div>
+        <!-- Pill-Filter -->
+        <div id="gallery-filter" class="flex flex-wrap gap-2 fade-in" role="tablist" aria-label="Fotos filtern">
+          {filters.map((f, i) => (
+            <button class={`pill pill-dark gallery-pill ${i === 0 ? 'is-active' : ''}`} data-filter={f.id} role="tab" aria-selected={i === 0 ? 'true' : 'false'}>{f.label}</button>
+          ))}
+        </div>
+      </div>
+
+      <div id="gallery-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {photos.map((p, i) => (
+          <button
+            class={`media-card gallery-item fade-in stagger-${(i % 3) + 1}`}
+            data-cat={p.cat}
+            data-full={`${p.src}.jpg`}
+            data-alt={p.alt}
+            aria-label={`${p.cap} - vergrößern`}
+          >
+            <picture>
+              <source type="image/webp" srcset={`${p.src}.webp`} />
+              <img src={`${p.src}.jpg`} alt={p.alt} width="480" height="360" class="w-full h-full object-cover" loading="lazy" />
+            </picture>
+            <div class="p-4 w-full flex items-center justify-between">
+              <span class="font-display font-bold text-white text-[0.95rem] hero-text-shadow">{p.cap}</span>
+              <span class="w-8 h-8 rounded-full glass flex items-center justify-center flex-shrink-0">
+                <Icon name="ArrowUpRight" size={15} strokeWidth={2.4} class="text-white" />
+              </span>
+            </div>
+          </button>
+        ))}
+        <!-- Abschluss-Tile (nur bei „Alle") -->
+        <a href="/kontakt" class="gallery-item card-dark flex flex-col justify-between !p-6 group" data-cat="cta">
+          <Icon name="WavesLadder" size={28} strokeWidth={1.8} class="text-aqua-bright" />
+          <div>
+            <h3 class="text-white font-display font-bold text-lg leading-snug mb-1.5">Mehr sehen?</h3>
+            <p class="text-white/65 text-[0.92rem] mb-4">Gerne zeigen wir Ihnen Referenzen bei einem Vor-Ort-Termin.</p>
+            <span class="arrow-link arrow-link-light !text-[0.85rem]">Termin vereinbaren <Icon name="ArrowRight" size={15} strokeWidth={2.4} /></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 5 · REGION ════════ -->
+  <section id="region" class="section-paper py-20 md:py-28 relative overflow-hidden scroll-mt-24">
+    <span class="ghost-mark -right-10 -bottom-16 opacity-50" data-text="SEE" data-parallax="0.05" aria-hidden="true"></span>
+    <div class="container-px relative">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="fade-in">
+          <span class="eyebrow mb-5">Region</span>
+          <h2 class="heading-lg text-balance mb-6">Am Ammersee <span class="accent-serif accent-water">zuhause.</span></h2>
+          <p class="text-lg text-muted leading-relaxed mb-7 text-pretty">
+            Unser Sitz ist Inning am Ammersee - für Kundinnen und Kunden im Fünfseenland, rund um den Ammersee und westlich von München. Persönlich, mit kurzen Wegen und einem offenen Ohr für Ihr Becken.
+          </p>
+          <div class="flex flex-wrap gap-2.5">
+            {['Inning am Ammersee', 'Ammersee', 'Fünfseenland', 'Starnberg', 'München (West)'].map((r) => (
+              <span class="tag"><Icon name="MapPin" size={14} strokeWidth={2.2} class="text-aqua-deep" />{r}</span>
+            ))}
+          </div>
+          <p class="text-sm text-muted-light mt-6 flex items-center gap-2">
+            <Icon name="Sailboat" size={16} strokeWidth={2} class="text-aqua-deep" />
+            Service-Radius im Detail? Sprechen Sie uns an - wir sagen Ihnen offen, ob wir zu Ihnen kommen.
+          </p>
+        </div>
+        <div class="fade-in stagger-2">
+          <MapBlock class="aspect-[4/3] lg:aspect-auto lg:h-[420px]" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 6 · BEWERTUNGEN (Google, echt - keine erfundenen) ════════ -->
+  <section class="section-foam py-16 md:py-20 relative overflow-hidden">
+    <div class="container-px relative">
+      <div class="card rounded-3xl !p-8 md:!p-12 flex flex-col lg:flex-row lg:items-center gap-8 fade-in">
+        <div class="flex-1">
+          <span class="eyebrow mb-4">Stimmen unserer Kunden</span>
+          <h2 class="heading-md text-balance mb-3">Lesen Sie, was Kundinnen und Kunden bei <span class="accent-serif accent-water">Google</span> sagen.</h2>
+          <p class="text-muted text-pretty max-w-xl">
+            Echte Bewertungen statt schöner Worte: Auf unserem Google-Profil finden Sie Erfahrungen rund um Beratung, Service und Sanierung - und können selbst eine hinterlassen.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 flex-shrink-0">
+          <a href={site.googleReviewsUrl} target="_blank" rel="noopener" class="btn btn-marine btn-lg">
+            <Icon name="Star" size={16} strokeWidth={2.2} />
+            Google-Bewertungen ansehen
+          </a>
+          <a href={telMobile} class="btn btn-outline">
+            <Icon name="Phone" size={15} strokeWidth={2.2} />
+            {site.phoneMobile}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 7 · KONTAKT + STANDORT ════════ -->
+  <section id="kontakt-anker" class="section-paper py-20 md:py-28 relative overflow-hidden scroll-mt-24">
+    <div class="container-px relative">
+      <SectionHeading
+        eyebrow="Kontakt"
+        title="Münchner Straße 51, <em>Inning am Ammersee.</em>"
+        intro="Termine nach Vereinbarung - rufen Sie uns an oder schreiben Sie uns. Wir beraten Sie gerne vor Ort."
+      />
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 mt-12 items-stretch">
+        <div class="grid sm:grid-cols-2 gap-4 content-start">
+          <a href={telMobile} class="tile group">
+            <span class="tile-icon tile-icon-marine mb-1"><Icon name="Phone" size={22} strokeWidth={2} /></span>
+            <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-light">Mobil</div>
+            <div class="font-display font-bold text-ink text-lg mono group-hover:text-aqua-deep transition-colors">{site.phoneMobile}</div>
+          </a>
+          <a href={telLandline} class="tile group">
+            <span class="tile-icon mb-1"><Icon name="Phone" size={22} strokeWidth={2} /></span>
+            <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-light">Festnetz</div>
+            <div class="font-display font-bold text-ink text-lg mono group-hover:text-aqua-deep transition-colors">{site.phoneLandline}</div>
+          </a>
+          <a href={mailLink} class="tile group sm:col-span-2">
+            <span class="tile-icon mb-1"><Icon name="Mail" size={22} strokeWidth={2} /></span>
+            <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-light">E-Mail</div>
+            <div class="font-display font-bold text-ink text-base group-hover:text-aqua-deep transition-colors break-all">{site.email}</div>
+          </a>
+          <div class="tile sm:col-span-2 !flex-row items-center gap-4">
+            <span class="tile-icon"><Icon name="Clock" size={22} strokeWidth={2} /></span>
+            <div>
+              <div class="font-display font-bold text-ink">Termine nach Vereinbarung</div>
+              <div class="text-[0.9rem] text-muted">Wir beraten Sie gerne vor Ort am Ammersee.</div>
+            </div>
+          </div>
+        </div>
+        <MapBlock class="min-h-[340px] lg:min-h-0" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 8 · FINAL CTA-BAND ════════ -->
+  <CtaBand />
+</Layout>
+
+<!-- ════════ Lightbox ════════ -->
+<div id="lightbox" class="fixed inset-0 z-[80] hidden items-center justify-center p-4" style="background: rgba(5,24,28,0.92); backdrop-filter: blur(8px);">
+  <button id="lightbox-close" class="absolute top-4 right-4 w-11 h-11 rounded-full glass flex items-center justify-center text-white" aria-label="Schließen">
+    <Icon name="X" size={20} strokeWidth={2.4} />
+  </button>
+  <figure class="max-w-5xl w-full">
+    <img id="lightbox-img" src="" alt="" class="w-full max-h-[80vh] object-contain rounded-xl" />
+    <figcaption id="lightbox-cap" class="text-white/70 text-sm text-center mt-3 font-mono"></figcaption>
+  </figure>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    // ── Gallery-Filter ──
+    const pills = document.querySelectorAll<HTMLButtonElement>('.gallery-pill');
+    const items = document.querySelectorAll<HTMLElement>('.gallery-item');
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const f = pill.dataset.filter;
+        pills.forEach((p) => {
+          p.classList.toggle('is-active', p === pill);
+          p.setAttribute('aria-selected', p === pill ? 'true' : 'false');
+        });
+        items.forEach((it) => {
+          const cat = it.dataset.cat;
+          const visible = f === 'alle' ? true : cat === f;
+          it.style.display = visible ? '' : 'none';
+        });
+      });
+    });
+
+    // ── Lightbox ──
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img') as HTMLImageElement | null;
+    const lbCap = document.getElementById('lightbox-cap');
+    const open = (full: string, alt: string) => {
+      if (!lb || !lbImg) return;
+      lbImg.src = full; lbImg.alt = alt;
+      if (lbCap) lbCap.textContent = alt;
+      lb.classList.remove('hidden'); lb.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      if (!lb) return;
+      lb.classList.add('hidden'); lb.classList.remove('flex');
+      document.body.style.overflow = '';
+    };
+    document.querySelectorAll<HTMLElement>('.media-card.gallery-item').forEach((card) => {
+      card.addEventListener('click', () => open(card.dataset.full || '', card.dataset.alt || ''));
+    });
+    document.getElementById('lightbox-close')?.addEventListener('click', close);
+    lb?.addEventListener('click', (e) => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  });
+</script>
+
+<style>
+  .gallery-pill.is-active { background: rgb(var(--rgb-aqua-deep)); color: #fff; border-color: rgb(var(--rgb-aqua-deep)); }
+</style>

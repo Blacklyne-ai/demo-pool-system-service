@@ -1,0 +1,168 @@
+---
+import { nav, telMobile, site } from '../data/site';
+import Icon from './Icon.astro';
+const { current = '' } = Astro.props;
+
+const isActive = (item: (typeof nav)[number]) =>
+  current === item.href || (item.href.startsWith('/') && item.href !== '/' && !item.href.includes('#') && current.startsWith(item.href));
+---
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50">
+  <div class="container-px pt-3 md:pt-5">
+    <div
+      id="nav-shell"
+      class="flex items-center justify-between gap-3 pl-3 pr-2 md:pl-4 md:pr-2.5 py-2 rounded-pill transition-all duration-500"
+      style="background: rgba(255,255,255,0.85); backdrop-filter: blur(20px) saturate(170%); -webkit-backdrop-filter: blur(20px) saturate(170%); border: 1px solid rgba(9,42,49,0.08); box-shadow: 0 1px 2px rgba(9,42,49,0.04), 0 8px 32px -8px rgba(9,42,49,0.16), inset 0 1px 0 0 rgba(255,255,255,0.7);"
+    >
+      <!-- Brand: Original-Dino (1:1) + Wortmarke (alte Site hatte kein Logo-File) -->
+      <a href="/" class="flex items-center gap-2.5 flex-shrink-0" aria-label="Pool-System-Service - Startseite">
+        <img src="/dino.png" alt="" width="86" height="40" class="h-7 w-auto drop-shadow-sm" />
+        <span class="flex flex-col leading-none">
+          <span class="font-display font-extrabold text-ink text-[0.92rem] md:text-base tracking-tight">Pool-System-Service</span>
+          <span class="font-mono text-[0.55rem] tracking-[0.2em] uppercase text-aqua-deep mt-1 hidden sm:block">Schwimmbad &amp; Meer</span>
+        </span>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden lg:flex items-center gap-0.5" aria-label="Hauptnavigation">
+        {nav.map((item) =>
+          item.children ? (
+            <div class="nav-dd relative">
+              <a href={item.href} class={`nav-pill inline-flex items-center gap-1 ${isActive(item) ? 'active' : ''}`} aria-haspopup="true" aria-expanded="false">
+                {item.label}
+                <Icon name="ChevronDown" size={14} strokeWidth={2.4} class="nav-dd-chev" />
+              </a>
+              <div class="nav-dd-panel" role="menu">
+                {item.children.map((c) => (
+                  <a href={c.href} role="menuitem" class={`nav-dd-item ${current === c.href ? 'active' : ''}`}>{c.label}</a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a href={item.href} class={`nav-pill ${isActive(item) ? 'active' : ''}`}>{item.label}</a>
+          )
+        )}
+      </nav>
+
+      <!-- Right cluster -->
+      <div class="flex items-center gap-2">
+        <a href={telMobile} class="btn btn-marine btn-sm hidden sm:inline-flex" aria-label={`Anrufen ${site.phoneMobile}`}>
+          <Icon name="Phone" size={14} strokeWidth={2.2} />
+          <span class="hidden xl:inline mono">{site.phoneMobile}</span>
+          <span class="xl:hidden">Anrufen</span>
+        </a>
+
+        <button id="menu-toggle" class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full transition self-center" style="color: #0D292F;" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden lg:hidden mt-2 mx-4 rounded-3xl overflow-hidden" style="background: rgba(255,255,255,0.98); backdrop-filter: blur(22px); border: 1px solid rgba(9,42,49,0.08); box-shadow: 0 30px 60px -20px rgba(9,42,49,0.3);">
+    <nav class="flex flex-col p-4 max-h-[calc(100vh-7rem)] overflow-y-auto" aria-label="Mobile Navigation">
+      {nav.map((item) => (
+        <Fragment>
+          <a href={item.href} class="py-3 px-2 text-ink/85 hover:text-aqua-deep border-b border-line font-display font-semibold transition" style={current === item.href ? 'color:#0B6E7C;font-weight:800' : ''}>{item.label}</a>
+          {item.children && (
+            <div class="flex flex-col pl-4 border-b border-line">
+              {item.children.filter((c) => c.href !== item.href).map((c) => (
+                <a href={c.href} class="py-2.5 px-2 text-sm text-muted hover:text-aqua-deep transition">{c.label}</a>
+              ))}
+            </div>
+          )}
+        </Fragment>
+      ))}
+      <div class="grid grid-cols-2 gap-2 mt-4">
+        <a href={telMobile} class="btn btn-marine btn-sm">
+          <Icon name="Phone" size={14} strokeWidth={2.2} /> Anrufen
+        </a>
+        <a href="/kontakt" class="btn btn-aqua btn-sm">
+          Beratung
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .hamburger { display: inline-flex; flex-direction: column; justify-content: center; gap: 4px; width: 22px; height: 22px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #0D292F; border-radius: 2px; transition: transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55), opacity 0.25s ease; transform-origin: center; }
+  .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .nav-dd-panel {
+    position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(8px);
+    min-width: 230px; padding: 0.5rem; border-radius: 18px;
+    background: rgba(255,255,255,0.97); border: 1px solid rgba(9,42,49,0.08);
+    backdrop-filter: blur(22px) saturate(170%); -webkit-backdrop-filter: blur(22px) saturate(170%);
+    box-shadow: 0 20px 44px -16px rgba(9,42,49,0.26), inset 0 1px 0 0 rgba(255,255,255,0.7);
+    opacity: 0; visibility: hidden; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 60;
+  }
+  .nav-dd-panel::before { content: ""; position: absolute; left: 0; right: 0; top: -14px; height: 16px; }
+  .nav-dd:hover .nav-dd-panel, .nav-dd:focus-within .nav-dd-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .nav-dd:hover .nav-dd-chev { transform: rotate(180deg); }
+  .nav-dd-item {
+    display: block; padding: 0.6rem 0.85rem; border-radius: 11px; font-size: 0.9rem; font-weight: 600;
+    font-family: var(--font-display); color: rgba(13,41,47,0.72); transition: background 0.2s ease, color 0.2s ease;
+  }
+  .nav-dd-item:hover { background: rgba(13,165,188,0.08); color: #0B6E7C; }
+  .nav-dd-item.active { color: #0B6E7C; background: rgba(13,165,188,0.06); font-weight: 700; }
+  .nav-dd-chev { transition: transform 0.3s ease; }
+</style>
+
+<script>
+  function isOpen() {
+    const menu = document.getElementById('mobile-menu');
+    return !!menu && !menu.classList.contains('hidden');
+  }
+  function setOpen(open: boolean) {
+    const menu = document.getElementById('mobile-menu');
+    const toggle = document.getElementById('menu-toggle');
+    const burger = toggle?.querySelector('.hamburger');
+    if (!menu) return;
+    menu.classList.toggle('hidden', !open);
+    burger?.classList.toggle('open', open);
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+    }
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    toggle?.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!isOpen()); });
+    menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.body.style.overflow = '';
+  });
+
+  const w = window as any;
+  if (!w.__psHeader) {
+    w.__psHeader = true;
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) setOpen(false); });
+    document.addEventListener('click', (e) => {
+      const header = document.getElementById('site-header');
+      if (isOpen() && header && !header.contains(e.target as Node)) setOpen(false);
+    });
+    window.addEventListener('resize', () => { if (window.innerWidth >= 1024 && isOpen()) setOpen(false); });
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const shell = document.getElementById('nav-shell');
+        const y = window.scrollY;
+        if (shell) {
+          if (y > 30) { shell.style.background = 'rgba(255,255,255,0.94)'; shell.style.transform = 'scale(0.985)'; }
+          else { shell.style.background = 'rgba(255,255,255,0.85)'; shell.style.transform = 'scale(1)'; }
+        }
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+</script>

@@ -1,0 +1,93 @@
+---
+import { site, nav, legalNav, telMobile, telLandline, mailLink } from '../data/site';
+import { services } from '../data/services';
+import Icon from './Icon.astro';
+const year = 2026;
+---
+<footer class="section-marine relative overflow-hidden" role="contentinfo">
+  <div class="caustics caustics-soft" aria-hidden="true"></div>
+
+  <div class="container-px relative pt-16 md:pt-20 pb-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-white/10">
+      <!-- Brand -->
+      <div class="lg:col-span-4">
+        <div class="flex items-center gap-2.5">
+          <img src="/dino.png" alt="" width="86" height="40" class="h-8 w-auto" loading="lazy" />
+          <span class="flex flex-col leading-none">
+            <span class="font-display font-extrabold text-white text-lg tracking-tight">Pool-System-Service</span>
+            <span class="font-mono text-[0.58rem] tracking-[0.2em] uppercase text-aqua-bright mt-1">Schwimmbad &amp; Meer</span>
+          </span>
+        </div>
+        <p class="text-white/55 text-[0.95rem] leading-relaxed mt-5 max-w-xs text-pretty">
+          {site.leitsatz} Seit 1991 - mit persönlicher Beratung vor Ort am Ammersee und im Fünfseenland.
+        </p>
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-6 text-[0.78rem] font-mono uppercase tracking-[0.12em] text-white/45">
+          <span class="inline-flex items-center gap-1.5"><Icon name="Award" size={14} class="text-aqua-bright" /> Seit 1991</span>
+          <span class="inline-flex items-center gap-1.5"><Icon name="ShieldCheck" size={14} class="text-aqua-bright" /> TÜV-geprüft</span>
+        </div>
+        <p class="signature signature-light mt-6">{site.owner}</p>
+      </div>
+
+      <!-- Navigation -->
+      <div class="lg:col-span-2">
+        <h3 class="text-white text-[0.72rem] font-mono font-semibold uppercase tracking-[0.2em] mb-5">Navigation</h3>
+        <ul class="space-y-2.5 text-[0.95rem]">
+          {nav.map((item) => (
+            <li><a href={item.href} class="text-white/60 hover:text-white transition">{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Leistungen -->
+      <div class="lg:col-span-3">
+        <h3 class="text-white text-[0.72rem] font-mono font-semibold uppercase tracking-[0.2em] mb-5">Leistungen</h3>
+        <ul class="space-y-2.5 text-[0.95rem]">
+          {services.slice(0, 6).map((s) => (
+            <li><a href={`/leistungen#${s.slug}`} class="text-white/60 hover:text-white transition">{s.name}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Kontakt -->
+      <div class="lg:col-span-3">
+        <h3 class="text-white text-[0.72rem] font-mono font-semibold uppercase tracking-[0.2em] mb-5">Kontakt</h3>
+        <ul class="space-y-3 text-[0.92rem] text-white/60">
+          <li class="flex items-start gap-2.5">
+            <Icon name="MapPin" size={16} strokeWidth={2} class="mt-0.5 flex-shrink-0 text-aqua-bright" />
+            <span>{site.address.street}<br />{site.address.postcode} {site.address.city}</span>
+          </li>
+          <li>
+            <a href={telMobile} class="flex items-center gap-2.5 hover:text-white transition">
+              <Icon name="Phone" size={16} strokeWidth={2} class="flex-shrink-0 text-aqua-bright" />
+              <span class="mono">{site.phoneMobile}</span>
+            </a>
+          </li>
+          <li>
+            <a href={telLandline} class="flex items-center gap-2.5 hover:text-white transition">
+              <Icon name="Phone" size={16} strokeWidth={2} class="flex-shrink-0 text-aqua-bright opacity-70" />
+              <span class="mono">{site.phoneLandline}</span>
+            </a>
+          </li>
+          <li>
+            <a href={mailLink} class="flex items-center gap-2.5 hover:text-white transition break-all">
+              <Icon name="Mail" size={16} strokeWidth={2} class="flex-shrink-0 text-aqua-bright" />
+              {site.email}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Legal bar -->
+    <div class="pt-7 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      <p class="text-white/40 text-[0.8rem]">
+        © {year} {site.name} · Inhaberin {site.owner} · {site.address.street}, {site.address.postcode} {site.address.city}
+      </p>
+      <div class="flex items-center gap-5 text-[0.85rem]">
+        {legalNav.map((l) => (
+          <a href={l.href} class="text-white/55 hover:text-white transition">{l.label}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+</footer>

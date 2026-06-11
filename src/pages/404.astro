@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { telMobile, site } from '../data/site';
+---
+<Layout title="Seite nicht gefunden · Pool-System-Service" noindex={true} current="">
+  <section class="section-paper min-h-[80vh] flex items-center relative overflow-hidden">
+    <span class="ghost-mark left-1/2 -translate-x-1/2 top-10 opacity-60" data-text="404" aria-hidden="true"></span>
+    <div class="caustics caustics-soft" aria-hidden="true"></div>
+    <div class="container-px relative text-center max-w-xl mx-auto">
+      <img src="/dino.png" alt="" width="86" height="40" class="h-12 w-auto mx-auto mb-6" />
+      <span class="eyebrow eyebrow-center mb-5">Fehler 404</span>
+      <h1 class="heading-xl text-balance mb-5">Diese Seite ist wohl <span class="accent-serif accent-water">untergetaucht.</span></h1>
+      <p class="text-lg text-muted mb-9 text-pretty">
+        Die gesuchte Seite gibt es nicht (mehr). Kein Problem - zurück ins klare Wasser:
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/" class="btn btn-marine btn-lg">Zur Startseite<Icon name="ArrowRight" size={16} strokeWidth={2.4} /></a>
+        <a href={telMobile} class="btn btn-outline btn-lg"><Icon name="Phone" size={15} strokeWidth={2.2} />{site.phoneMobile}</a>
+      </div>
+    </div>
+  </section>
+</Layout>

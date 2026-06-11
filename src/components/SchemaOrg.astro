@@ -1,0 +1,43 @@
+---
+// Schema.org LocalBusiness — nur belegte Fakten (alte Site + Briefing).
+// Kein erfundenes Rating, keine erfundenen Öffnungszeiten.
+import { site } from '../data/site';
+interface Props { schema?: object | null }
+const { schema = null } = Astro.props;
+
+const base = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': site.url + '/#business',
+  name: site.name,
+  slogan: site.slogan,
+  description: site.description,
+  url: site.url,
+  telephone: site.phoneMobileIntl,
+  email: site.email,
+  foundingDate: String(site.facts.foundedYear),
+  founder: { '@type': 'Person', name: site.owner },
+  image: new URL('/images/og-image.jpg', site.url).toString(),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    postalCode: site.address.postcode,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    addressCountry: site.address.countryCode,
+  },
+  areaServed: ['Inning am Ammersee', 'Ammersee', 'Fünfseenland', 'Starnberg', 'München (West)'],
+  knowsAbout: [
+    'Schwimmbad-Sanierung',
+    'Pool-Grundreinigung',
+    'Solartechnik für Pools',
+    'Filteranlagen',
+    'Mess- und Regeltechnik',
+    'Wasseranalytik',
+    'Schwimmbadbau und Wartung',
+  ],
+};
+
+const json = JSON.stringify(schema ? { ...base, ...schema } : base);
+---
+<script type="application/ld+json" set:html={json} />

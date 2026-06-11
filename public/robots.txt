@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://demo-pool-system-service.pages.dev/sitemap-index.xml

@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import MapBlock from '../components/MapBlock.astro';
+import Icon from '../components/Icon.astro';
+import { site, telMobile, telLandline, mailLink, mailFor, whatsappLink } from '../data/site';
+
+const channels = [
+  { icon: 'Phone', label: 'Mobil', value: site.phoneMobile, href: telMobile, accent: true, note: 'Am schnellsten erreichbar' },
+  { icon: 'Phone', label: 'Festnetz', value: site.phoneLandline, href: telLandline, note: 'Büro Inning' },
+  { icon: 'MessageCircle', label: 'WhatsApp', value: 'Nachricht senden', href: whatsappLink, whatsapp: true, note: 'Schnell ein Foto vom Becken schicken' },
+  { icon: 'Mail', label: 'E-Mail', value: site.email, href: mailFor('Anfrage rund ums Schwimmbad'), note: 'Antwort meist am selben Tag' },
+];
+---
+
+<Layout
+  title="Kontakt · Pool-System-Service · Inning am Ammersee"
+  description="Pool-System-Service, Jeannette Schierl, Münchner Straße 51, 82266 Inning am Ammersee. Mobil 0171/47 55 811, Festnetz 08143/9920969. Termine nach Vereinbarung."
+  current="/kontakt"
+>
+  <PageHero
+    eyebrow="Kontakt"
+    crumb="Kontakt"
+    title="Rufen Sie uns an - wir beraten Sie gerne <em>vor Ort.</em>"
+    subtitle="Termine nach Vereinbarung. Am Telefon, per WhatsApp oder E-Mail - und am liebsten persönlich bei Ihnen am Becken."
+    ghost="HALLO"
+    primary={{ href: telMobile, label: site.phoneMobile }}
+  />
+
+  <!-- Kanäle + Karte -->
+  <section class="section-paper py-16 md:py-24 relative overflow-hidden">
+    <div class="container-px relative">
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        <!-- Kontakt-Tiles -->
+        <div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            {channels.map((c) => (
+              <a
+                href={c.href}
+                target={c.whatsapp ? '_blank' : undefined}
+                rel={c.whatsapp ? 'noopener' : undefined}
+                class="tile group"
+              >
+                <span class={`tile-icon ${c.accent ? 'tile-icon-marine' : ''}`}><Icon name={c.icon} size={22} strokeWidth={2} /></span>
+                <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-light mt-1">{c.label}</div>
+                <div class="font-display font-bold text-ink text-lg group-hover:text-aqua-deep transition-colors break-words">{c.value}</div>
+                <div class="text-[0.85rem] text-muted">{c.note}</div>
+              </a>
+            ))}
+          </div>
+
+          <!-- Adresse + Termine -->
+          <div class="card mt-4 !p-6">
+            <div class="flex items-start gap-4">
+              <span class="tile-icon flex-shrink-0"><Icon name="MapPin" size={22} strokeWidth={2} /></span>
+              <div>
+                <div class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-light">Adresse</div>
+                <div class="font-display font-bold text-ink text-lg leading-snug">Pool-System-Service</div>
+                <p class="text-muted">{site.owner}<br />{site.address.street}<br />{site.address.postcode} {site.address.city}</p>
+              </div>
+            </div>
+            <div class="ripple-divider my-5" aria-hidden="true"></div>
+            <div class="flex items-center gap-3">
+              <span class="dot dot-green" aria-hidden="true"></span>
+              <p class="text-ink font-display font-semibold">Termine nach Vereinbarung</p>
+            </div>
+            <p class="text-[0.9rem] text-muted mt-1.5">Rufen Sie uns an oder schreiben Sie uns - wir finden gemeinsam einen Termin, der zu Ihnen passt.</p>
+          </div>
+        </div>
+
+        <!-- Karte -->
+        <div class="lg:sticky lg:top-28">
+          <MapBlock class="h-[420px] lg:h-[560px]" />
+          <p class="signature mt-6 ml-1">{site.owner}</p>
+          <p class="text-[0.82rem] text-muted-light font-mono uppercase tracking-[0.14em] ml-1">Inhaberin · freut sich auf Ihren Anruf</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Lieber gleich <em>anrufen?</em>" />
+</Layout>
